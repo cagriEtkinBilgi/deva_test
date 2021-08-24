@@ -1,0 +1,80 @@
+import 'dart:convert';
+import 'package:deva_test/models/base_models/base_model.dart';
+
+class CalendarEventModel extends BaseModel {
+
+  int id;
+  String title;
+  String url;
+  DateTime startDate;
+  String startDateStr;
+  String startTime;
+  DateTime endDate;
+  String endDateStr;
+  String endTime;
+  String timeText;
+  int type;
+  String color;
+
+
+  @override
+  int outarized;
+
+  @override
+  DateTime resultDate;
+
+
+  CalendarEventModel({
+      this.id,
+      this.title,
+      this.url,
+      this.startDate,
+      this.startDateStr,
+      this.startTime,
+      this.endDate,
+      this.endDateStr,
+      this.endTime,
+      this.timeText,
+      this.type,
+      this.color});
+
+  @override
+  fromJson(String str) => fromMap(json.decode(str));
+
+
+  @override
+  fromMap(Map<String, dynamic> map) =>CalendarEventModel(
+    id: map['id'],
+    color:map['color'],
+    startTime:map['startTime'],
+    title:map['title'],
+    timeText:map['timeText'],
+    //endDate:map['endDate'],
+    //startDate:map['startDate'],
+    endDateStr:map['endDateStr'],
+    endTime:map['endTime'],
+    startDateStr:map['startDateStr'],
+    type: map['type'],
+    url: map['url'],
+  );
+
+  @override
+  String toJson() => json.encode(toMap());
+
+
+  @override
+  Map<String, dynamic> toMap() => {
+    'id':id,
+    //'endDate':endDate,
+    //'startDate':startDate,
+    'title':title,
+    'startDateStr':startDateStr,
+    'endDateStr':endDateStr,
+    'timeText':timeText,
+    'type':type,
+    'startTime':startTime,
+    'color':color,
+  };
+
+
+}

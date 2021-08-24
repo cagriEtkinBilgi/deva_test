@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "643215620825",
+    "project_id": "devamobilapp",
+    "storage_bucket": "devamobilapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643215620825:android:88deffa2ea12ed2b80dcc8",
+        "android_client_info": {
+          "package_name": "com.example.deva_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "643215620825-d3u05r4mq3921b9c0eg0b2e429stdsps.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.deva_test",
+            "certificate_hash": "6d0fa3d1c2e0af603271787ee0a3c0980a7b273c"
+          }
+        },
+        {
+          "client_id": "643215620825-0r01pkdgbf25kam7vp0fgl04pgnq6cs5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAebLNwD7FHIWbx_Tr9QL4zS2hA85lRUSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "643215620825-0r01pkdgbf25kam7vp0fgl04pgnq6cs5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
