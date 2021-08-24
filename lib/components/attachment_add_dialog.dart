@@ -167,11 +167,11 @@ class _AttachmentAddDialogState<T extends BaseViewModel> extends State<Attachmen
   }
 
   Future pickFile() async {
-    var result = await FilePicker.getFilePath();
+    var result = await FilePicker.platform.pickFiles(allowMultiple: false);
     if(result!=null){
       setState(() {
-        model.filePath=result;
-        model.name=result.split('/').last;
+        model.filePath=result.paths.first;
+        model.name=result.paths.first.split('/').last;
       });
     }
   }

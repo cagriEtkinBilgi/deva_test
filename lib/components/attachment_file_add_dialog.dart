@@ -94,13 +94,13 @@ class _AttachmentFileAddDialogState extends State<AttachmentFileAddDialog> {
     );
   }
   Future pickFile() async {
-    var result = await FilePicker.getFilePath();
+    var result = await FilePicker.platform.pickFiles(allowMultiple: false);
     if(result!=null){
       setState(() {
-        model.filePath=result;
-        model.name=result.split('/').last;
+        model.filePath=result.paths.first;
+        model.name=result.paths.first.split('/').last;
         if(model.name!="")
-          fileName=result.split('/').last;
+          fileName=result.paths.first.split('/').last;
       });
     }
   }
