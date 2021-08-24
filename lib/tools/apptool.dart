@@ -45,7 +45,7 @@ class AppTools{
     //Bu alan Apilar tamamalanınca silinecek
     return repetitionStatus;
   }
-  //static String apiUri="https://www.devaportal.org";
+  static String apiUri="https://www.devaportal.org";
 //mazeret ekele sekili düzeltilecek
-  static String apiUri="https://192.168.1.23:45461";
+  //static String apiUri="https://192.168.1.23:45461";
 }

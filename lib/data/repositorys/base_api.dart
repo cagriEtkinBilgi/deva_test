@@ -5,7 +5,6 @@ import 'package:deva_test/models/base_models/base_model.dart';
 import 'package:deva_test/tools/apptool.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 
 
 
@@ -19,8 +18,8 @@ class BaseApi{
   Dio _dio;
   BaseApi._init(){
     final baseOptions=BaseOptions(
-      //baseUrl:AppTools.apiUri+"/api/api",
-      baseUrl:AppTools.apiUri+"/api",
+      baseUrl:AppTools.apiUri+"/api/api",
+      //baseUrl:AppTools.apiUri+"/api",
     );
     _dio=Dio(baseOptions);
   }
