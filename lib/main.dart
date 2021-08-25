@@ -7,16 +7,16 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'data/uow_providers.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp();
+ // await Firebase.initializeApp();
 
-  print("Handling a background message: ${message.messageId}");
-}
+//  print("Handling a background message: ${message.messageId}");
+//}
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  //WidgetsFlutterBinding.ensureInitialized();
   //await Firebase.initializeApp();
   //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);//push notification ayarları şuan çalışmıyor
   setupLocator();

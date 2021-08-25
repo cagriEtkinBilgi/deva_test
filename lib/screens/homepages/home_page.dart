@@ -58,7 +58,7 @@ class HomePage extends StatelessWidget {
   return BaseView<DashboardViewModel>(
       onModelReady: (model) async {
         model.getDashboard();
-        await Firebase.initializeApp();
+        /*await Firebase.initializeApp();
         FirebaseAuth.instance.signInAnonymously().then((value){
           print(value.user.uid.toString());
         });
@@ -71,7 +71,7 @@ class HomePage extends StatelessWidget {
         FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage message) {
           if(message!=null)
             print('message recived${message}');
-        });
+        });*/
       },
       builder: (context, model, child) {
         if (model.apiState == ApiStateEnum.LodingState) {
