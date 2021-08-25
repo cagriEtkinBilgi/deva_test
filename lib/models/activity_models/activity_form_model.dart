@@ -34,39 +34,42 @@ class ActivityFormModel extends BaseModel{
   bool isWithUpperUnit;
   String isWithUpperUnitStr;
   List<DropdownSearchModel> categorySelects;
+  List<int> participants;
 
 
   ActivityFormModel({
-      this.id,
-      this.name,
-      this.desc,
-      this.summary,
-      this.returns,
-      this.workGroupID,
-      this.activityCategory,
-      this.activtyCategoryID,
-      this.activityTypeID,
-      this.activityTypeStr,
-      this.workGroup,
-      this.activityStatusStr,
-      this.activityStatus,
-      this.locationID,
-      this.locationName,
-      this.dueDateStr,
-      this.plannedStartDateStr,
-      this.plannedStartTime,
-      this.plannedEndDateStr,
-      this.plannedEndTime,
-      this.startDate,
-      this.endDate,
-      this.repetitionType,
-      this.categorySelects,
-      this.isWithUpperUnit,
-      this.isWithUpperUnitStr,
-      this.isPublicStr,
-      this.isPublic,
-      this.isOnline,
-      this.inviteLink
+    this.id,
+    this.name,
+    this.desc,
+    this.summary,
+    this.returns,
+    this.workGroupID,
+    this.activityCategory,
+    this.activtyCategoryID,
+    this.activityTypeID,
+    this.activityTypeStr,
+    this.workGroup,
+    this.activityStatusStr,
+    this.activityStatus,
+    this.locationID,
+    this.locationName,
+    this.dueDateStr,
+    this.plannedStartDateStr,
+    this.plannedStartTime,
+    this.plannedEndDateStr,
+    this.plannedEndTime,
+    this.startDate,
+    this.endDate,
+    this.repetitionType,
+    this.categorySelects,
+    this.isWithUpperUnit,
+    this.isWithUpperUnitStr,
+    this.isPublicStr,
+    this.isPublic,
+    this.isOnline,
+    this.inviteLink,
+    this.participants
+
   });
 
   @override
@@ -111,10 +114,13 @@ class ActivityFormModel extends BaseModel{
       activityTypeID:map["activityTypeID"],
       activityTypeStr:map["activityTypeStr"],
     );
-
     var categorys=List<DropdownSearchModel>();
     for(var item in map["categorySelects"]){
       categorys.add(DropdownSearchModel().fromMap(item));
+    }
+    var participant=List<int>();
+    for(var item in map["participants"]){
+      model.participants.add(item);
     }
     model.categorySelects=categorys;
   }
@@ -150,6 +156,7 @@ class ActivityFormModel extends BaseModel{
     "activityTypeStr":activityTypeStr,
     "workGroupID":workGroupID,
     "isPublic":isPublic,
-    "isWithUpperUnit":isWithUpperUnit
+    "isWithUpperUnit":isWithUpperUnit,
+    "participants": jsonEncode(participants),
   };
 }

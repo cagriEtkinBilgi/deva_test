@@ -10,6 +10,7 @@ import 'package:deva_test/models/base_models/base_list_model.dart';
 import 'package:deva_test/models/component_models/attachment_dialog_model.dart';
 import 'package:deva_test/models/component_models/dropdown_search_model.dart';
 import 'package:deva_test/models/component_models/note_add_model.dart';
+import 'package:deva_test/models/component_models/select_list_widget_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -48,6 +49,40 @@ class ActivityRepository {
           "/Activity/GetActivityNotes/$ID", ActivityNoteModel(),
           token: token);
       print(response.datas);
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<BaseListModel> getActivityWorkGroups(String token) async {
+    try {
+      BaseListModel<SelectListWidgetModel> response =
+      await BaseApi.instance.dioGet<SelectListWidgetModel>(
+          "/WorkGroup/GetAllAuthWorkGroups", SelectListWidgetModel(),
+          token: token);
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+  Future<BaseListModel> getActivityCategory(String token) async {
+    try {
+      BaseListModel<SelectListWidgetModel> response =
+      await BaseApi.instance.dioGet<SelectListWidgetModel>(
+          "/Activity/GetCategoryByCreateForm", SelectListWidgetModel(),
+          token: token);
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+  Future<BaseListModel> getActivityParticipant(String token,int ID) async {
+    try {
+      BaseListModel<SelectListWidgetModel> response =
+      await BaseApi.instance.dioGet<SelectListWidgetModel>(
+          "/Activity/GetParticipantByCreateForm/${ID}", SelectListWidgetModel(),
+          token: token);
       return response;
     } catch (e) {
       throw e;
@@ -212,6 +247,18 @@ class ActivityRepository {
       throw e;
     }
   }
+  Future<BaseListModel> getActivityCategorysByStepper(String token) async {
+    try {
+      BaseListModel<DropdownSearchModel> response =
+      await BaseApi.instance.dioGet<DropdownSearchModel>(
+          "/Activity/GetActivityTypes", DropdownSearchModel(),
+          token: token);
+      //print(response.datas);
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
 
   Future<BaseListModel> createActivity(String token,ActivityFormModel model) async {
     try {
@@ -219,7 +266,7 @@ class ActivityRepository {
       var formData=FormData.fromMap(model.toMap());
       BaseListModel<ActivityFormModel> response =
       await BaseApi.instance.dioPost<ActivityFormModel>(
-          "/Activity/Create", ActivityFormModel(),
+          "/Activity/CreateComplated", ActivityFormModel(),
           formData,
           token: token);
       return response;
@@ -227,6 +274,7 @@ class ActivityRepository {
       throw e;
     }
   }
+
 
   Future<BaseListModel> updateActivity(String token,ActivityFormModel model) async {
     try {

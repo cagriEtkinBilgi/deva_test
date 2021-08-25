@@ -55,7 +55,7 @@ class SimpleCardWidget extends StatelessWidget {
                   children: [
                     Text(title,
                         style: TextStyle(
-                            fontSize: 25,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: textColor
                         )
@@ -79,7 +79,7 @@ class SimpleCardWidget extends StatelessWidget {
                 child: Center(
                   child: Text((count==0)?"":count.toString(),
                       style: TextStyle(
-                        fontSize: 53,
+                        fontSize: 45,
                         fontWeight: FontWeight.bold,
                         color: textColor,
                       )

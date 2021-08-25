@@ -8,6 +8,7 @@ class ActivityCompleteModel extends BaseModel{
   int id;
   String summary;
   String returns;
+  String locationName;
   String startDateStr;
   String startTime;
   String endDateStr;
@@ -25,6 +26,7 @@ class ActivityCompleteModel extends BaseModel{
     this.startTime,
     this.endDateStr,
     this.endTime,
+    this.locationName
   });
 
   @override
@@ -38,7 +40,8 @@ class ActivityCompleteModel extends BaseModel{
     endDateStr:map["endDateStr"],
     endTime:map["endTime"],
     startTime: map["startTime"],
-    startDateStr:map["startDateStr"]
+    startDateStr:map["startDateStr"],
+    locationName:map["locationName"],
   );
 
   @override
@@ -53,6 +56,7 @@ class ActivityCompleteModel extends BaseModel{
     "endTime":endTime,
     "startDateStr":startDateStr,
     "startTime":startTime,
+    "locationName":locationName
   };
 
 }

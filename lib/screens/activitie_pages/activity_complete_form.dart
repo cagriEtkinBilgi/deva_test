@@ -1,16 +1,23 @@
 import 'package:deva_test/components/build_progress_widget.dart';
 import 'package:deva_test/components/error_widget.dart';
+import 'package:deva_test/components/location_components/location_text_widget.dart';
 import 'package:deva_test/components/message_dialog.dart';
 import 'package:deva_test/components/text_field_date_time_picker_widget.dart';
 import 'package:deva_test/data/view_models/activity_view_model.dart';
 import 'package:deva_test/enums/api_state.dart';
+import 'package:deva_test/models/component_models/check_list_model.dart';
+import 'package:deva_test/models/component_models/select_list_widget_model.dart';
 import 'package:deva_test/screens/base_class/base_view.dart';
 import 'package:deva_test/tools/validations.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import 'activiti_layouts/activity_complate_participants_widget.dart';
 
 class ActivityCompleteForm extends StatelessWidget {
   var _activityCompleteForm=GlobalKey<FormState>();
   int id;
+  List<CheckListModel> listParticipants;
   ActivityCompleteForm({Map args}){
     if(args["id"]!=null)
       id=args["id"];
@@ -106,13 +113,51 @@ class ActivityCompleteForm extends StatelessWidget {
                  SizedBox(
                    height: 5,
                  ),
+                 LocationTextWidget(
+                   initVal: "",
+                   onChange: (val){
+                     _formModel.locationName=val;
+                   },
+                 ),
+                 SizedBox(
+                   height: 5,
+                 ),
+                 ActivityComplateParticipantsWidget(
+                   futureInvadedUser:model.getInvadedUser(id),
+                   futureParticipant:model.getParticipantsUser(id),
+                   onSaveInvadedAsyc:(List<CheckListModel> checks) async {
+                     try{
+                       var retval=await await model.addUserToActivity(checks, id);
+                       model.setState(ApiStateEnum.LoadedState);
+                       return retval;
+                     }catch(e){
+                       throw e;
+                     }
+
+                   },
+                   onChangeStatus: (List<SelectListWidgetModel> val){
+                     listParticipants=val.map((e) => e.toCheckListModel()).toList();
+                   },
+                 ),
+                 SizedBox(
+                   height: 5,
+                 ),
                  Container(
                    width: double.infinity,
-                   child: RaisedButton(
+                   child: ElevatedButton(
                      onPressed: () async {
+                       if(!_activityCompleteForm.currentState.validate()){
+                         return;
+                       }
+                       if(listParticipants.length<=0){
+                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                           content: Text("Lütfen Yoklamayı Yapın"),
+                         ));
+                         return;
+                       }
+
                        try{
-                         print(_formModel.toJson());
-                         await model.completeActivity(_formModel).then((value){
+                         await model.completeActivity(_formModel,listParticipants).then((value){
                            if(value){
                              Navigator.of(context).pop(true);
                            }else{
@@ -123,7 +168,6 @@ class ActivityCompleteForm extends StatelessWidget {
                          CustomDialog.instance.exceptionMessage(context,model: e);
                        }
                      },
-                     color: Colors.blue,
                      child: Text("Kaydet"),
                    ),
                  )

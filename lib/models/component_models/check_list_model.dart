@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:deva_test/models/base_models/base_model.dart';
+import 'package:deva_test/models/component_models/select_list_widget_model.dart';
 
 class CheckListModel extends BaseModel {
 
@@ -34,4 +35,10 @@ class CheckListModel extends BaseModel {
     "value":value,
     "name":name
   };
+  SelectListWidgetModel toSelectListWidgetModel()=> SelectListWidgetModel(
+    resultDate: resultDate,
+    title: name,
+    selected: value,
+    id: id,
+  );
 }

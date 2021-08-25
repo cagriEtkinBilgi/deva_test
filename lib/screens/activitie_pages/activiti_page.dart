@@ -55,7 +55,15 @@ class ActivitiePage extends StatelessWidget {
           ),
           drawer: NavigationDrawer(),
           bottomNavigationBar: NavigationBar(selectedIndex: 0,),
-
+          floatingActionButton: FloatingActionButton(
+            child: Icon(
+              Icons.add
+            ),
+            onPressed: (){
+              //CreateActivity
+              Navigator.pushNamed<dynamic>(context,'/CreateActivity');
+            },
+          ),
           body: buildScreen(context,model),
         ),
       ),

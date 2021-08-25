@@ -1,6 +1,7 @@
 
 import 'package:deva_test/screens/activitie_pages/activiti_page.dart';
 import 'package:deva_test/screens/activitie_pages/activity_complete_form.dart';
+import 'package:deva_test/screens/activitie_pages/activity_cretae_page.dart';
 import 'package:deva_test/screens/activitie_pages/activity_detail_page.dart';
 import 'package:deva_test/screens/activitie_pages/activity_form_page.dart';
 import 'package:deva_test/screens/calendar_pages/calendar_main_page.dart';
@@ -91,6 +92,9 @@ class RouteGenerator{
           break;
         case '/AddNewRelation':
           return MaterialPageRoute(builder: (_)=>AddNewRelationPage());
+          break;
+        case '/CreateActivity':
+          return MaterialPageRoute(builder: (_)=>ActivityCreatePage());
           break;
         default:
           return _errorRoute();

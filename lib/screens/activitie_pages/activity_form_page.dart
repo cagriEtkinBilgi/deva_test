@@ -89,7 +89,6 @@ class ActivityFormPage extends StatelessWidget {
                       decoration: InputDecoration(
                         labelText: "Faaliyet Açıklama",
                         hintText: "Faaliyet Açıklama",
-
                       ),
                     ),
                     SizedBox(
@@ -104,7 +103,6 @@ class ActivityFormPage extends StatelessWidget {
                       decoration: InputDecoration(
                         labelText: "Faaliyet Konumu",
                         hintText: "Faaliyet Konumu",
-
                       ),
                     ),
                     SizedBox(
@@ -192,7 +190,7 @@ class ActivityFormPage extends StatelessWidget {
                     ),
                     Container(
                       width: double.infinity,
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         onPressed: () async {
                           try{
                             await model.createActivity(form).then((value){
@@ -206,7 +204,9 @@ class ActivityFormPage extends StatelessWidget {
                             CustomDialog.instance.exceptionMessage(context,model: e);
                           }
                         },
-                        color: Colors.blue,
+                        //style: ButtonStyle(
+                          //  backgroundColor: MaterialStateProperty.all(Colors.blue)
+                        //),
                         child: Text("Kaydet"),
                       ),
                     )

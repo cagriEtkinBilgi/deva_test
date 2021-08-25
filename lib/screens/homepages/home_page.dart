@@ -1,12 +1,13 @@
 import 'package:deva_test/components/build_progress_widget.dart';
+import 'package:deva_test/components/card_components/button_card_min_widget.dart';
 import 'package:deva_test/components/dashbord_card_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:deva_test/components/error_widget.dart';
 import 'package:deva_test/components/message_dialog.dart';
 import 'package:deva_test/components/navigation_bar.dart';
 import 'package:deva_test/components/navigation_drawer.dart';
-import 'package:deva_test/components/simple_card_min_widget.dart';
-import 'package:deva_test/components/simple_card_widget.dart';
+import 'package:deva_test/components/card_components/simple_card_min_widget.dart';
+import 'package:deva_test/components/card_components/simple_card_widget.dart';
 import 'package:deva_test/data/view_models/dashboard_view_model.dart';
 import 'package:deva_test/enums/api_state.dart';
 import 'package:deva_test/screens/base_class/base_view.dart';
@@ -146,20 +147,6 @@ class HomePage extends StatelessWidget {
             height: 10,
           ),
           SimpleCardWidget(
-            title: "Aksiyonlar",
-            decorationColor: Theme.of(context).primaryColor,
-            textColor: Colors.white,
-            icon: Icons.backup_table,
-            subTitle: "Sorumlu Olduğum Aksiyonlar",
-            count: model.dashboard.tasksCount,
-            onClick: () {
-              Navigator.of(context).pushReplacementNamed('/TasksPage');
-            },
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          SimpleCardWidget(
             title: "Takvimim",
             decorationColor: Theme.of(context).primaryColor,
             textColor: Colors.white,
@@ -170,6 +157,45 @@ class HomePage extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed('/CalendarMainPage');
             },
           ),
+
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: SimpleCardMinWidget(
+                  title: "Aksiyonlar",
+                  decorationColor: Theme.of(context).primaryColor,
+                  textColor: Colors.white,
+                  countColor: Colors.white,
+                  count: model.dashboard.tasksCount,
+                  onClick: () {
+                    Navigator.of(context).pushReplacementNamed('/TasksPage');
+                  },
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                flex: 1,
+                child: ButtonCardMinWidget(
+                  title: "Faliyet Ekle",
+                  decorationColor: Theme.of(context).primaryColor,
+                  textColor: Colors.white,
+                  icon: Icons.add,
+                  iconColor: Colors.white,
+                  iconSize: 55,
+                  onClick: (){
+                    Navigator.pushNamed<dynamic>(context,'/CreateActivity');
+                  },
+                ),
+              )
+            ],
+          ),
+
         ],
       ),
     );

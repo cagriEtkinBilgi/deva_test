@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>643215620825-1lgdc4o9nv5666aeb1e153ttre5kgoai.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.643215620825-1lgdc4o9nv5666aeb1e153ttre5kgoai</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>643215620825-d3u05r4mq3921b9c0eg0b2e429stdsps.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAlv16aMiRrrxkx5eg5D6z3uBh6mtRL0Wc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>643215620825</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.devaTest</string>
+	<key>PROJECT_ID</key>
+	<string>devamobilapp</string>
+	<key>STORAGE_BUCKET</key>
+	<string>devamobilapp.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:643215620825:ios:40b29d9edc162c4d80dcc8</string>
+</dict>
+</plist>

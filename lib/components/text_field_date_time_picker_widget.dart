@@ -36,7 +36,10 @@ class _TextFieldDateTimePickerWidgetState extends State<TextFieldDateTimePickerW
   @override
   void initState() {
     textControllerDate.text =formatDate(widget.initDateTime, [dd, '.', mm, '.', yyyy]);
+    selectedDate =formatDate(widget.initDateTime, [dd, '.', mm, '.', yyyy]);
     textControllerTime.text=widget.initTime.hour.toString()+":"+widget.initTime.minute.toString();
+    selectedMinute=widget.initTime.hour.toString()+":"+widget.initTime.minute.toString();
+    widget.onChangedDate(selectedDate,selectedMinute);
     super.initState();
   }
 

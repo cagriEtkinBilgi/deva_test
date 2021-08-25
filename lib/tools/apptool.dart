@@ -6,7 +6,7 @@ class AppTools{
   static getAppBarElevation(){
     if(TargetPlatform==TargetPlatform.android){
       return 0.0;
-    }else if(TargetPlatform==TargetPlatform.android){
+    }else if(TargetPlatform==TargetPlatform.iOS){
       return 5.0;
     }
   }
@@ -46,6 +46,5 @@ class AppTools{
     return repetitionStatus;
   }
   static String apiUri="https://www.devaportal.org";
-//mazeret ekele sekili düzeltilecek
-  //static String apiUri="https://192.168.1.23:45461";
+  //static String apiUri="https://192.168.1.29:45465";
 }

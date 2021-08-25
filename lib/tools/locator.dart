@@ -8,6 +8,7 @@ import 'package:deva_test/data/repositorys/search_repository.dart';
 import 'package:deva_test/data/repositorys/security_repository.dart';
 import 'package:deva_test/data/repositorys/task_repository.dart';
 import 'package:deva_test/data/repositorys/work_group_repository.dart';
+import 'package:deva_test/data/view_models/activity_create_view_model.dart';
 import 'package:deva_test/data/view_models/activity_view_model.dart';
 import 'package:deva_test/data/view_models/calendar_view_model.dart';
 import 'package:deva_test/data/view_models/dashboard_view_model.dart';
@@ -34,6 +35,7 @@ void setupLocator(){
 
   locator.registerLazySingleton(() => ActivityRepository());
   locator.registerFactory(() => ActivityViewModel());
+  locator.registerFactory(() => ActivityCreateViewModel());
 
   locator.registerLazySingleton(() => TaskRepository());
   locator.registerFactory(() => TaskViewModel());

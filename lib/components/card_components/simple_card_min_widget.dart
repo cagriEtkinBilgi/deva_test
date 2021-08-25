@@ -46,7 +46,8 @@ class SimpleCardMinWidget extends StatelessWidget {
                 child: Center(
                   child: Text(count.toString(),
                       style: TextStyle(
-                        fontSize: 53,
+                        fontSize: 45,
+
                         fontWeight: FontWeight.bold,
                         color: countColor,
                       )

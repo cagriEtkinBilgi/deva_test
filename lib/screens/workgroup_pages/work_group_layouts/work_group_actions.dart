@@ -25,13 +25,13 @@ class WorkGroupAction extends StatelessWidget {
         }else if(model.apiState==ApiStateEnum.ErorState){
           return CustomErrorWidget(model.onError);
         }else{
-          print(workModel.authorizationStatus);
           return buildDetailCard(model,context);
         }
       },
     );
   }
   Widget buildDetailCard(WorkGroupViewModel model,BuildContext context) {
+    print(workModel.authorizationStatus);
     return Stack(
       children: [
         Container(
@@ -67,7 +67,7 @@ class WorkGroupAction extends StatelessWidget {
 
           )
         ),
-        Visibility(
+        /*Visibility(
           visible: (workModel.authorizationStatus==2),
           child: Align(
               alignment: Alignment.bottomRight,
@@ -76,7 +76,7 @@ class WorkGroupAction extends StatelessWidget {
                 child: FloatingActionButton(
                   child: Icon(Icons.add),
                   onPressed: (){
-                    Navigator.of(context).pushNamed('/ActivitiesFormPage',arguments: {"workGroupId":workModel.id}).then((value){
+                    Navigator.of(context).pushNamed('/CreateActivity',arguments: {"workGroupId":workModel.id}).then((value){
                       if(value)
                         model.getWorkGroupActivitys(workModel.id);
                     });
@@ -84,7 +84,7 @@ class WorkGroupAction extends StatelessWidget {
                 ),
               )
           ),
-        )
+        )*/
       ],
     );
   }

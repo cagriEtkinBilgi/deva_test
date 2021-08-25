@@ -30,7 +30,6 @@ class ActivityViewModel extends BaseViewModel{
   ActivityFormModel formModel;
   ActivityCompleteModel completeFormModel;
 
-
   var repo=locator<ActivityRepository>();
 
   Future<List<ActivityListModel>> getActivitys(int typeID) async {
@@ -212,6 +211,7 @@ class ActivityViewModel extends BaseViewModel{
       var sesion=await SecurityViewModel().getCurrentSesion();
       BaseListModel<ActivityParticipantsModel> retVal= await repo.getParticipantsUser(sesion.token, id);
       var models =retVal.datas.map((e) => e.toCheckListModel()).toList();
+      print("deneme");
       return models;
     }catch(e){
       return e;
@@ -351,12 +351,23 @@ class ActivityViewModel extends BaseViewModel{
 
   }
 
-  Future<bool> completeActivity(ActivityCompleteModel model) async {
+  Future<bool> completeActivity(ActivityCompleteModel model,List<CheckListModel> participans) async {
     try{
       setState(ApiStateEnum.LodingState);
       var sesion=await SecurityViewModel().getCurrentSesion();
       BaseListModel<ActivityFormModel> retVal;
         retVal= await repo.completeActivity(sesion.token,model);
+
+      List<ActivityParticipantsModel> listUser=[];
+      for(var item in participans){
+        listUser.add(ActivityParticipantsModel(
+          id: item.id,
+          userNameSurname: item.name,
+          participationStatus: item.value,
+        ));
+      }
+       await repo.updateParticipantsUser(sesion.token,listUser);
+
         setState(ApiStateEnum.LoadedState);
       return true;
     }catch(e){

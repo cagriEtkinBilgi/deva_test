@@ -84,7 +84,7 @@ class _CheckListWidgetState extends State<CheckListWidget> {
     );
   }
 
-  Widget buildButtons(BuildContext context) {
+  Widget buildButtons(BuildContext context){
     if(isLoding){
       return ProgressWidget();
     }{
@@ -92,7 +92,7 @@ class _CheckListWidgetState extends State<CheckListWidget> {
         children: [
           Expanded(
             flex: 1,
-            child: FlatButton(
+            child: TextButton(
               onPressed: (){
                 setState(() {
                   isLoding=true;
@@ -118,15 +118,13 @@ class _CheckListWidgetState extends State<CheckListWidget> {
                     errorMessage=e.toString();
                   });
                 }
-
-
               },
               child: Text(widget.confirmeBottonText),
             ),
           ),
           Expanded(
             flex: 1,
-            child: FlatButton(
+            child: TextButton(
               onPressed: (){
                 Navigator.of(context).pop();
               },
@@ -158,7 +156,7 @@ class _CheckListWidgetState extends State<CheckListWidget> {
                   ],
                 ),
               ),
-            FlatButton(
+            TextButton(
               onPressed: (){
                 for(var item in widgetList){
                   if(selectedAll)

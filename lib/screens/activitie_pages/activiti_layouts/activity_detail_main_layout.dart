@@ -1,5 +1,5 @@
 import 'package:deva_test/components/build_progress_widget.dart';
-import 'package:deva_test/components/check_list_widget.dart';
+import 'package:deva_test/components/check_list_components/check_list_widget.dart';
 import 'package:deva_test/components/custom_detail_card_widget.dart';
 import 'package:deva_test/components/error_widget.dart';
 import 'package:deva_test/data/view_models/activity_view_model.dart';
@@ -36,6 +36,7 @@ class ActivityDetailMainLayout extends StatelessWidget {
 
   Widget buildDetailCard(BuildContext context,ActivityViewModel model) {
     var detail=model.activity;
+    print(detail.authorizationStatus);
     return Stack(
       children: [
         Container(
@@ -116,7 +117,17 @@ class ActivityDetailMainLayout extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: Padding(
                 padding: EdgeInsets.only(right: 25,bottom: 25),
-                child: SpeedDial(
+                child:FloatingActionButton(
+                  child: Icon(Icons.add),
+                  onPressed: (){
+                    Navigator.pushNamed<dynamic>(context,'/ActivitiesCompleteForm',arguments: {"id":id}).then((value){
+                      if(value==true){
+                        model.getActivity(id);
+                      }
+                    });
+                  },
+                )
+                /*SpeedDial(
                   backgroundColor:  Theme.of(context).primaryColor,
                   animatedIcon: AnimatedIcons.menu_close,
                   children: [
@@ -147,7 +158,7 @@ class ActivityDetailMainLayout extends StatelessWidget {
                     ),
 
                   ],
-                )
+                )*/
               )
           ),
         )
@@ -174,7 +185,6 @@ class ActivityDetailMainLayout extends StatelessWidget {
                         }catch(e){
                           throw e;
                         }
-
                       },
                     );
                   }
