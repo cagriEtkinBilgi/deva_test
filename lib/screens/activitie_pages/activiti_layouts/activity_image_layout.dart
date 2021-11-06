@@ -6,7 +6,6 @@ import 'package:deva_test/components/message_dialog.dart';
 import 'package:deva_test/data/view_models/activity_view_model.dart';
 import 'package:deva_test/enums/api_state.dart';
 import 'package:deva_test/models/activity_models/activity_attachment_model.dart';
-import 'package:deva_test/models/activity_models/activity_list_model.dart';
 import 'package:deva_test/models/component_models/attachment_dialog_model.dart';
 import 'package:deva_test/screens/base_class/base_view.dart';
 import 'package:deva_test/components/photo_gallery_widget.dart';

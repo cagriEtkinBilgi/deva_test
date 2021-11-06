@@ -1,3 +1,4 @@
+import 'package:deva_test/components/appbar_flexible_background/flexible_space_background.dart';
 import 'package:deva_test/components/build_progress_widget.dart';
 import 'package:deva_test/components/custom_link_field_widget.dart';
 import 'package:deva_test/components/dropdown_serach_widget.dart';
@@ -5,7 +6,7 @@ import 'package:deva_test/components/error_widget.dart';
 import 'package:deva_test/components/form_checkbox_list_tile_Widget.dart';
 import 'package:deva_test/components/location_select_widget.dart';
 import 'package:deva_test/components/message_dialog.dart';
-import 'package:deva_test/components/text_field_date_time_picker_widget.dart';
+import 'package:deva_test/components/date_components/text_field_date_time_picker_widget.dart';
 import 'package:deva_test/data/view_models/activity_view_model.dart';
 import 'package:deva_test/enums/api_state.dart';
 import 'package:deva_test/screens/base_class/base_view.dart';
@@ -30,6 +31,7 @@ class ActivityFormPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: (title!=null)?Text("$title -  Güncelle"):Text("Yeni Faaliyet"),
+        flexibleSpace: FlexibleSpaceBackground(),
       ),
       body: buildScrean(workGroupId),
     );

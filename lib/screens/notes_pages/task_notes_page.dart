@@ -1,3 +1,4 @@
+import 'package:deva_test/components/appbar_flexible_background/flexible_space_background.dart';
 import 'package:deva_test/components/build_progress_widget.dart';
 import 'package:deva_test/components/data_search_widget.dart';
 import 'package:deva_test/components/error_widget.dart';
@@ -24,6 +25,7 @@ class TaskNotesPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Görev Notları"),
+          flexibleSpace: FlexibleSpaceBackground(),
           elevation: AppTools.getAppBarElevation(),
           actions: [
             IconButton(

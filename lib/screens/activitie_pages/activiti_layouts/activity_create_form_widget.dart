@@ -1,16 +1,16 @@
 import 'package:deva_test/components/custom_link_field_widget.dart';
 import 'package:deva_test/components/form_checkbox_list_tile_Widget.dart';
 import 'package:deva_test/components/location_components/location_text_widget.dart';
-import 'package:deva_test/components/text_field_date_time_picker_widget.dart';
+import 'package:deva_test/components/date_components/text_field_date_time_picker_widget.dart';
 import 'package:deva_test/models/activity_models/activity_form_model.dart';
 import 'package:deva_test/tools/validations.dart';
 import 'package:flutter/material.dart';
 
 class ActivityCreateFormWidget extends StatelessWidget {
-  var _activityForm=GlobalKey<FormState>();
+  GlobalKey<FormState> activityForm;
   ActivityFormModel form;
 
-  ActivityCreateFormWidget({this.form});
+  ActivityCreateFormWidget({this.form,this.activityForm});
   @override
   Widget build(BuildContext context){
     return Card(
@@ -18,7 +18,7 @@ class ActivityCreateFormWidget extends StatelessWidget {
         padding: const EdgeInsets.all(4.0),
         child: Container(
           child: Form(
-              key: _activityForm,
+              key: activityForm,
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),

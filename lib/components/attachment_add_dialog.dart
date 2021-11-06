@@ -55,11 +55,10 @@ class _AttachmentAddDialogState<T extends BaseViewModel> extends State<Attachmen
                   children: [
                     Expanded(
                       flex: 1,
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         onPressed: () async {
                           await imagePicker(ImageSource.gallery);
                         },
-                        color: Theme.of(context).primaryColor,
                         child: Text("Galeri",style: TextStyle(color:Colors.white),),
 
                       ),
@@ -156,7 +155,7 @@ class _AttachmentAddDialogState<T extends BaseViewModel> extends State<Attachmen
 
 
   Future imagePicker(ImageSource source) async {
-    var resuld=await picker.getImage(source:source );
+    var resuld=await picker.pickImage(source:source );
     if(resuld!=null){
       setState(() {
         model.file = File(resuld.path);

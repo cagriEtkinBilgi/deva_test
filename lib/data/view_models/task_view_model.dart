@@ -27,12 +27,13 @@ class TaskViewModel extends BaseViewModel{
 
   var repo=locator<TaskRepository>();
 
-  Future<List<TaskListModel>> getTasks() async {
+  Future<List<TaskListModel>> getTasks(int periot) async {
     PageID=1;
     try{
       var sesion=await SecurityViewModel().getCurrentSesion();
-      BaseListModel<TaskListModel> retVal= await repo.getTasks(sesion.token, 0);
+      BaseListModel<TaskListModel> retVal= await repo.getTasks(sesion.token, PageID,periot);
       tasks=retVal.datas;
+      PageID++;
       //canEdit=(retVal.outarized==2);
       canEdit=true;
       setState(ApiStateEnum.LoadedState);
@@ -108,12 +109,12 @@ class TaskViewModel extends BaseViewModel{
 
   }
 
-  Future<List<TaskListModel>> getTasksNextPage() async {
+  Future<List<TaskListModel>> getTasksNextPage(int periot) async {
     isPageLoding=true;
     notifyListeners();
     try{
       var sesion=await SecurityViewModel().getCurrentSesion();
-      BaseListModel<TaskListModel> retVal= await repo.getTasks(sesion.token, PageID);
+      BaseListModel<TaskListModel> retVal= await repo.getTasks(sesion.token, PageID,periot);
       if(retVal.datas.length!=0){
         tasks.addAll(retVal.datas);
         PageID++;
@@ -283,7 +284,7 @@ class TaskViewModel extends BaseViewModel{
     try{
       var sesion=await SecurityViewModel().getCurrentSesion();
       task= await repo.deleteTask(sesion.token, id);
-      await getTasks();
+      await getTasks(-1);
       return task;
     }catch (e){
       if(e is ErrorModel){

@@ -32,7 +32,7 @@ class CalendarEventListModel extends BaseModel {
    );
    model.date= DateParseTools.instance.StrToDate(model.dateStr);
    if(map["dayEvents"]!=null){
-     var events=List<CalendarEventModel>();
+     List<CalendarEventModel> events=[];
      for(var event in map["dayEvents"]){
         events.add(CalendarEventModel().fromMap(event));
      }

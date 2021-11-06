@@ -12,11 +12,11 @@ import 'base_api.dart';
 
 class TaskRepository{
 
-  Future<BaseListModel> getTasks(String token,int pageID) async {
+  Future<BaseListModel> getTasks(String token,int pageID,int periot) async {
     try{
       //Apisi Gelince link Düzeletilecek!!
       BaseListModel<TaskListModel> response=
-      await BaseApi.instance.dioGet<TaskListModel>("/Task/GetUserTasks/$pageID",TaskListModel(),token: token);
+      await BaseApi.instance.dioGet<TaskListModel>("/Task/GetUserTasks/$pageID/$periot",TaskListModel(),token: token);
       return response;
     }catch(e){
       throw e;

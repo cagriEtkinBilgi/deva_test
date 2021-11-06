@@ -1,3 +1,4 @@
+import 'package:deva_test/components/appbar_flexible_background/flexible_space_background.dart';
 import 'package:deva_test/components/build_progress_widget.dart';
 import 'package:deva_test/components/data_search_widget.dart';
 import 'package:deva_test/components/error_widget.dart';
@@ -16,6 +17,10 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TasksPage extends StatelessWidget {
   var _scroolController= ScrollController();
+  int selectedFilter=-1;
+
+  TasksPage({this.selectedFilter=-1});
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -25,12 +30,13 @@ class TasksPage extends StatelessWidget {
         },
       child: BaseView<TaskViewModel>(
         onModelReady: (model){
-          model.getTasks();
+          model.getTasks(selectedFilter);
         },
         builder:(context,model,widget)=> Scaffold(
           appBar: AppBar(
             title: Text("Aksiyonlar"),
             elevation: AppTools.getAppBarElevation(),
+            flexibleSpace: FlexibleSpaceBackground(),
             actions: [
               IconButton(
                   icon: Icon(Icons.search),
@@ -41,6 +47,18 @@ class TasksPage extends StatelessWidget {
                       delegate: DataSearch(pageID:3 ),
                     );
                   }
+              ),
+              IconButton(
+                  icon: Icon(Icons.format_list_bulleted),
+                  tooltip: "Filtreler",
+                  onPressed: () async {
+                    var result= await Navigator.pushNamed<dynamic>(context,'/ActivityFilter',arguments: {"selectedID":selectedFilter});
+                    if(result!=null){
+                      selectedFilter=result;
+                      model.getTasks(selectedFilter);
+                    }
+                  }
+
               ),
               //IconButton(icon: Icon(Icons.more_vert), onPressed: (){})
             ],
@@ -53,7 +71,7 @@ class TasksPage extends StatelessWidget {
                 Navigator.of(context).pushNamed('/TaskFormPage').then((value){
                 try{
                   if(value!=null){
-                      model.getTasks();
+                      model.getTasks(selectedFilter);
                   }else{
                     CustomDialog.instance.exceptionMessage(context);
                   }
@@ -86,14 +104,14 @@ class TasksPage extends StatelessWidget {
       onNotification:(t){
         if (t.metrics.pixels >0 && t.metrics.atEdge) {
           if(!model.isPageLoding){
-            model.getTasksNextPage();
+            model.getTasksNextPage(selectedFilter);
           }
         }
         return null;
       },
       child: RefreshIndicator(
         onRefresh: () async{
-          return await model.getTasks();
+          return await model.getTasks(selectedFilter);
         },
         child: Stack(
           children: [
@@ -125,15 +143,48 @@ class TasksPage extends StatelessWidget {
                                         });
                                       },
                                       title: Text(listItem.name),
+                                      leading: _buildCardLeading(listItem),
                                       subtitle: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(listItem.assignerNameSurname),
+                                          Container(
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text("Durum",style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Theme.of(context).accentColor
+                                                    ),),
+                                                    buildStatus(context,listItem.taskStatus),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text("Öncelik",style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Theme.of(context).accentColor
+                                                    ),),
+                                                    buildPriority(context,listItem.taskPriority),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          )
                                         ],
                                       )
                                   ),
                                 ),
-                                Padding(
+                                /*Padding(
                                   padding:  EdgeInsets.only(left: 16,right: 16,),
                                   child: Container(
                                     child: Column(
@@ -164,7 +215,7 @@ class TasksPage extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                )
+                                )*/
                               ],
                             ),
                           ),
@@ -196,7 +247,7 @@ class TasksPage extends StatelessWidget {
               Navigator.of(context).pushNamed('/TaskFormPage',arguments: {"id":listItem.id,"title":listItem.name}).then((value){
                 try{
                   if(value){
-                      model.getTasks();
+                    model.getTasks(selectedFilter);
                   }else{
                     CustomDialog.instance.exceptionMessage(context);
                   }
@@ -231,13 +282,25 @@ class TasksPage extends StatelessWidget {
     }else{
       return [ ];
     }
-
   }
+
   Container buildPagePrgres(bool isLoading) {
     return (!isLoading)?Container():Container(
       child: ProgressWidget(),
     );
   }
+
+  Widget _buildCardLeading(TaskListModel model){
+    var dateStrs=model.plannedStartDate.split('.');
+    return Column(
+      children: [
+        Text(dateStrs[0],style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 20),),
+        Text(dateStrs[1],style:TextStyle(fontSize: 12),),
+        Text(dateStrs[2],style:TextStyle(fontSize: 12),),
+      ],
+    );
+  }
+
   Widget buildStatus(BuildContext context,int status) {
     return Container(
       decoration: BoxDecoration(

@@ -83,7 +83,6 @@ class ActivityCreateViewModel extends BaseViewModel{
 
   }
   Future<bool> createActivity(ActivityFormModel model) async {
-
     try{
       setState(ApiStateEnum.LodingState);
       var sesion=await SecurityViewModel().getCurrentSesion();

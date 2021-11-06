@@ -1,8 +1,9 @@
+import 'package:deva_test/components/appbar_flexible_background/flexible_space_background.dart';
 import 'package:deva_test/components/build_progress_widget.dart';
 import 'package:deva_test/components/error_widget.dart';
 import 'package:deva_test/components/location_components/location_text_widget.dart';
 import 'package:deva_test/components/message_dialog.dart';
-import 'package:deva_test/components/text_field_date_time_picker_widget.dart';
+import 'package:deva_test/components/date_components/text_field_date_time_picker_widget.dart';
 import 'package:deva_test/data/view_models/activity_view_model.dart';
 import 'package:deva_test/enums/api_state.dart';
 import 'package:deva_test/models/component_models/check_list_model.dart';
@@ -27,6 +28,7 @@ class ActivityCompleteForm extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Faaliyet Tamamla"),
+        flexibleSpace: FlexibleSpaceBackground(),
       ),
       body:buildScreen(id),
     );

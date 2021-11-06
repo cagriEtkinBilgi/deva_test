@@ -43,6 +43,11 @@ class ActivityDetailMainLayout extends StatelessWidget {
           child: CustomCardWidget(
             cards: [
               CustomCardDetailModel(
+                  title: "Adı",
+                  content: detail.name,
+                  cardIcon: Icons.title
+              ),
+              CustomCardDetailModel(
                   title: "Açıklama",
                   content: detail.desc,
                   cardIcon: Icons.content_paste
@@ -118,7 +123,7 @@ class ActivityDetailMainLayout extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(right: 25,bottom: 25),
                 child:FloatingActionButton(
-                  child: Icon(Icons.add),
+                  child: Icon(Icons.done),
                   onPressed: (){
                     Navigator.pushNamed<dynamic>(context,'/ActivitiesCompleteForm',arguments: {"id":id}).then((value){
                       if(value==true){

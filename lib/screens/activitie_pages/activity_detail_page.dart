@@ -1,9 +1,11 @@
+import 'package:deva_test/components/appbar_flexible_background/flexible_space_background.dart';
 import 'package:deva_test/models/activity_models/activity_list_model.dart';
 import 'package:flutter/material.dart';
 import 'activiti_layouts/activity_detail_main_layout.dart';
 import 'activiti_layouts/activity_file_layout.dart';
 import 'activiti_layouts/activity_image_layout.dart';
 import 'activiti_layouts/activity_note_layout.dart';
+import 'activiti_layouts/activity_participant_layout.dart';
 
 class ActivityDetailPage extends StatelessWidget {
   int id;
@@ -17,7 +19,7 @@ class ActivityDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: Scaffold(
           appBar: AppBar(
             title: Text("${title}"),
@@ -25,6 +27,9 @@ class ActivityDetailPage extends StatelessWidget {
               tabs: [
                 Tab(
                   text: "Faaliyet",
+                ),
+                Tab(
+                  text: "Katılımcılar",
                 ),
                 Tab(
                   text: "Notlar",
@@ -37,12 +42,14 @@ class ActivityDetailPage extends StatelessWidget {
                 ),
               ],
             ),
-
           ),
          resizeToAvoidBottomInset: false,
           body: TabBarView(
             children: [
               ActivityDetailMainLayout(
+                id: id,
+              ),
+              ActivityParticipantLayout(
                 id: id,
               ),
               ActivityNoteLayout(

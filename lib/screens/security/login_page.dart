@@ -12,6 +12,14 @@ class LoginPage extends StatelessWidget {
   var loginFormKey=GlobalKey<FormState>();
   var loginModel=LoginModel();
   SecurityViewModel _viewModel;
+  String errorMessage="";
+  LoginPage({Map args}){
+    if(args!=null){
+      if(args["message"]!=null)
+        errorMessage=args["message"].toString();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     _viewModel=Provider.of<SecurityViewModel>(context);
@@ -40,7 +48,6 @@ class LoginPage extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       Container(
                         decoration: inputBoxDecoration,
                         child: TextFormField(
@@ -85,7 +92,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       Container(
                         alignment: Alignment.centerRight,
-                        child: FlatButton(
+                        child: TextButton(
                           onPressed: (){ debugPrint("Hop");},//Şifre Sıfırlama İşlemine gönderilecek
                           child: Text("Şifremi Unuttum!",style: textStyle,),
                         ),
@@ -93,8 +100,13 @@ class LoginPage extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.symmetric(vertical: 25.0),
                         width: double.infinity,
-                        child: RaisedButton(
-                          elevation: 5.0,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)
+                            ),
+                          ),
                           onPressed: () async {
                             if(loginFormKey.currentState.validate()){
                               loginFormKey.currentState.save();
@@ -110,17 +122,14 @@ class LoginPage extends StatelessWidget {
                                 print(e);
                                 CustomDialog.instance.exceptionMessage(context,model: _viewModel.errorModel);
                               }
-
                             }
                           },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          color: Colors.white,
                           child: buttonText(_viewModel.state),
                         ),
-
                       ),
+                      Container(
+                        child: (errorMessage!="")?Text(errorMessage):Container(),
+                      )
 
                     ],
                   ),

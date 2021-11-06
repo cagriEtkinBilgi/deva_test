@@ -8,6 +8,7 @@ class SelectedListWidget extends StatefulWidget {
   String title;
   IconButton extraButton;
   bool multiple;
+  double height;
   List q=[];
   SelectedListWidget({
     this.items,
@@ -15,6 +16,7 @@ class SelectedListWidget extends StatefulWidget {
     this.multiple = false,
     this.onChangeStatus,
     this.extraButton,
+    this.height,
   }){
     q=items;
   }
@@ -29,12 +31,14 @@ class _SelectedListWidgetState extends State<SelectedListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if(widget.height==null)
+      widget.height=MediaQuery.of(context).size.height-300;
     return Column(
       children: [
         _buildHeader(),
         Divider(color: Colors.black,),
         Container(
-          height: MediaQuery.of(context).size.height-300,
+          height: widget.height,
           child: _buildSeletcList()
         ),
       ],

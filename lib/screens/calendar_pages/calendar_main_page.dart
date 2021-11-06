@@ -1,5 +1,7 @@
+import 'package:deva_test/components/appbar_flexible_background/flexible_space_background.dart';
 import 'package:deva_test/components/build_progress_widget.dart';
 import 'package:deva_test/components/error_widget.dart';
+import 'package:deva_test/components/message_dialog.dart';
 import 'package:deva_test/components/navigation_bar.dart';
 import 'package:deva_test/components/navigation_drawer.dart';
 import 'package:deva_test/data/view_models/calendar_view_model.dart';
@@ -9,6 +11,7 @@ import 'package:deva_test/screens/base_class/base_view.dart';
 import 'package:deva_test/tools/activity_color.dart';
 import 'package:deva_test/tools/date_parse.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarMainPage extends StatefulWidget {
@@ -63,6 +66,7 @@ class _CalendarMainPageState extends State<CalendarMainPage> with TickerProvider
       child: Scaffold(
         appBar: AppBar(
           title: Text("Takvim"),
+          flexibleSpace: FlexibleSpaceBackground(),
         ),
         body: buildBody(),
         drawer: NavigationDrawer(),
@@ -98,7 +102,7 @@ class _CalendarMainPageState extends State<CalendarMainPage> with TickerProvider
         //ProgressWidget(),
 
         SizedBox(height: 8.0),
-        Expanded(child: _buildEventList()),
+        Expanded(child: _buildEventList(model)),
       ],
     );
   }
@@ -230,105 +234,129 @@ class _CalendarMainPageState extends State<CalendarMainPage> with TickerProvider
     );
   }
 
-/* Buttonlar Appbar Actionsa çekşlecek
-  Widget _buildButtons() {
-    final dateTime = _events.keys.elementAt(_events.length - 2);
 
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            RaisedButton(
-              child: Text('Ay'),
-              onPressed: () {
-                setState(() {
-                  _calendarController.setCalendarFormat(CalendarFormat.month);
-                });
-              },
-            ),
-            RaisedButton(
-              child: Text('2 Hafta'),
-              onPressed: () {
-                setState(() {
-                  _calendarController
-                      .setCalendarFormat(CalendarFormat.twoWeeks);
-                });
-              },
-            ),
-            RaisedButton(
-              child: Text('Hafta'),
-              onPressed: () {
-                setState(() {
-                  _calendarController.setCalendarFormat(CalendarFormat.week);
-                });
-              },
-            ),
-          ],
-        ),
-        const SizedBox(height: 8.0),
-        RaisedButton(
-          child: Text(
-              'Set day ${dateTime.day}-${dateTime.month}-${dateTime.year}'),
-          onPressed: () {
-            _calendarController.setSelectedDay(
-              DateTime(dateTime.year, dateTime.month, dateTime.day),
-              runCallback: true,
-            );
-          },
-        ),
-      ],
-    );
-  }
-*/
 
-  Widget _buildEventList() {
+  Widget _buildEventList(CalendarViewModel model) {
     List _selectedObject=_selectedEvents
         .map((event)=>CalendarEventModel().fromMap(event)).toList();
     return ListView.separated(
       itemCount: _selectedObject.length,
       itemBuilder: (context,i){
         CalendarEventModel event=_selectedObject[i];
-        return Container(
-          decoration: BoxDecoration(
-            color: Colors.grey.shade200
-          ),
-          child: ListTile(
-            leading: Container(
-              child: Text(event.timeText??"",
-                style: TextStyle(
-                  fontSize: 11,
+        return Slidable(
+          actionPane: SlidableDrawerActionPane(),
+          actionExtentRatio: 0.25,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade200
+            ),
+            child: ListTile(
+              leading: Container(
+                child: Text(event.timeText??"",
+                  style: TextStyle(
+                    fontSize: 11,
+                  ),
                 ),
               ),
-            ),
-            title: Text(event.title),
-            subtitle: Text(event.startDateStr+"-"+event.endDateStr),
-            trailing: Container(
-              height: 20,
-              width: 20,
-              decoration: BoxDecoration(
-                color: ActicityColors.getActivityColorData(event.type),
-                shape: BoxShape.circle
+              title: Text(event.title),
+              subtitle: Text(event.startDateStr+"-"+event.endDateStr),
+              trailing: Container(
+                height: 20,
+                width: 20,
+                decoration: BoxDecoration(
+                  color: ActicityColors.getActivityColorData(event.type),
+                  shape: BoxShape.circle
+                ),
               ),
+              onTap: () => {
+                if(event.type==2){
+                  Navigator.pushNamed<dynamic>(context,'/TaskDetailPage',arguments: {
+                    "id":event.id,
+                    "title":event.title
+                   })
+                }else{
+                  Navigator.pushNamed<dynamic>(context,'/ActivitiesDetailPage',arguments: {
+                    "id":event.id,
+                    "title":event.title})
+                }
+              },
             ),
-            onTap: () => {
-              if(event.type==2){
-                Navigator.pushNamed<dynamic>(context,'/TaskDetailPage',arguments: {
-                  "id":event.id,
-                  "title":event.title
-                 })
-              }else{
-                Navigator.pushNamed<dynamic>(context,'/ActivitiesDetailPage',arguments: {
-                  "id":event.id,
-                  "title":event.title})
-              }
-            },
+
           ),
+            secondaryActions: secondaryActions(
+                context,
+                model,
+                event)
         );
       },
       separatorBuilder: (context,i)=>Divider(),
     );
     }
+
+  List<Widget> secondaryActions(BuildContext context,CalendarViewModel model,CalendarEventModel listModel) {
+    if(listModel.authorizationStatus==2){
+      return [
+        IconSlideAction(
+          caption: 'Güncelle',
+          color: Colors.lightBlueAccent,
+          icon: Icons.more,
+          onTap: () {
+            if (listModel.type == 2) {
+              Navigator.of(context).pushNamed('/TaskFormPage',
+                  arguments: {"id": listModel.id, "title": listModel.title})
+                  .then((value) {
+                try {
+                  if (value) {
+                    //model.getTasks(selectedFilter);
+                  } else {
+                    CustomDialog.instance.exceptionMessage(context);
+                  }
+                } catch (e) {
+
+                }
+              });
+            } else {
+              try{
+                Navigator.of(context).pushNamed(
+                    '/ActivitiesFormPage', arguments: {
+                  "workGroupId": listModel.id,
+                  "id": listModel.id,
+                  "title": listModel.title,
+                }).then((value) {
+                  if (value == true) {
+                    //model.getActivitys(typeID,selectedFilter);
+                  }
+                });
+              }catch(e){
+                CustomDialog.instance.exceptionMessage(context);
+              }
+
+
+            }
+
+          }
+        ),
+        IconSlideAction(
+          caption: 'Sil',
+          color: Colors.indigo,
+          icon: Icons.delete,
+          onTap: () async {
+            await CustomDialog.instance.confirmeMessage(
+                context,
+                title: "Silme Onayı",
+                cont: "${listModel.title} - Silmek İstediğiniden Emin Misiniz?"
+            ).then((value){
+              if(value){
+                model.eventDelete(listModel.type, listModel.id);
+
+              }
+            });
+          },
+        ),
+      ];
+    }
+
+  }
+
 
 }

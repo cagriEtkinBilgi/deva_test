@@ -1,4 +1,6 @@
+import 'package:deva_test/components/appbar_flexible_background/flexible_space_background.dart';
 import 'package:deva_test/components/build_progress_widget.dart';
+import 'package:deva_test/components/check_list_components/multiple_image_select_widget.dart';
 import 'package:deva_test/components/error_widget.dart';
 import 'package:deva_test/components/message_dialog.dart';
 import 'package:deva_test/components/check_list_components/selected_list_widget.dart';
@@ -23,6 +25,7 @@ class _ActivityCreatePageState extends State<ActivityCreatePage> {
   List<SelectListWidgetModel> workGroupSelectList;
   List<SelectListWidgetModel> categoriSelectList;
   var form=ActivityFormModel();
+  var _formKey= GlobalKey<FormState>();
   @override
   void initState() {
     form.repetitionType=0;
@@ -33,6 +36,7 @@ class _ActivityCreatePageState extends State<ActivityCreatePage> {
     return  Scaffold(
       appBar: AppBar(
         title: Text('Faaliyet Oluştur'),
+        flexibleSpace: FlexibleSpaceBackground(),
       ),
       body:  Stepper(
         type: StepperType.horizontal,
@@ -114,13 +118,28 @@ class _ActivityCreatePageState extends State<ActivityCreatePage> {
             title: (_currentStep == 2)? Text('Durum Bilgileri'):Text('..'),
             content: ActivityCreateFormWidget(
               form: form,
+              activityForm: _formKey,
             ),
             isActive:_currentStep >= 0,
             state: _currentStep >= 2 ?
             StepState.complete : StepState.disabled,
           ),
           Step(
-            title: (_currentStep == 3)? Text('Katılımcılar'):Text('..'),
+            title: (_currentStep == 3)? Text('Fotograf'):Text('..'),
+            content:MultipleImageSelectWidget(
+              images: form.images??[],
+              onChange: (val){
+                form.images=val;
+                print(form.images);
+              },
+            ),
+            isActive:_currentStep >= 0,
+            state: _currentStep >= 3 ?
+            StepState.complete : StepState.disabled,
+          ),
+
+          Step(
+            title: (_currentStep == 4)? Text('Katılımcılar'):Text('..'),
             content:BaseView<ActivityCreateViewModel>(
               onModelReady: (model){
                 model.getActivityActivityParticipant(form.workGroupID);
@@ -148,7 +167,7 @@ class _ActivityCreatePageState extends State<ActivityCreatePage> {
               },
             ),
             isActive:_currentStep >= 0,
-            state: _currentStep >= 3 ?
+            state: _currentStep >= 4 ?
             StepState.complete : StepState.disabled,
           ),
         ],
@@ -164,30 +183,35 @@ class _ActivityCreatePageState extends State<ActivityCreatePage> {
         Visibility(
           child: TextButton(
             onPressed:(){
-              print(form.workGroupID);
               if(_currentStep==0){
                 if(form.workGroupID!=null)
                   onStepContinue();
                 else{
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Lütfen Çalışma Grubu Seçin")));
+                  return;
                 }
               }else if(_currentStep==1){
                 if(form.activtyCategoryID!=null)
                   onStepContinue();
                 else
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Lütfen Kategori Seçin")));
+                return;
               }else if(_currentStep==2){
-                if(form.name!=null)
+                if(_formKey.currentState.validate())
                   onStepContinue();
                 else
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Lütfen Formu Kotrol Ediniz")));
+                return;
               }else if(_currentStep==3){
+                onStepContinue();
+              }
+              else if(_currentStep==4){
                 if(form.participants.length!=0)
                   onStepContinue();
                 else
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("En Az Bir Katılımcı Seçniz")));
+                return;
               }
-
             },
             child: Text("Devam"),
           ),
@@ -235,14 +259,13 @@ class _ActivityCreatePageState extends State<ActivityCreatePage> {
   }
 
   continued(){
-
-    _currentStep < 3 ?
+    _currentStep < 4 ?
     setState(() => _currentStep += 1): null;
-    _canEnd=_currentStep==3;
+    _canEnd=_currentStep==4;
   }
   cancel(){
     _currentStep > 0 ?
     setState(() => _currentStep -= 1) : null;
-    _canEnd=_currentStep==3;
+    _canEnd=_currentStep==4;
   }
 }

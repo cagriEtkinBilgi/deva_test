@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:deva_test/models/base_models/base_model.dart';
+import 'package:deva_test/models/component_models/attachment_dialog_model.dart';
 import 'package:deva_test/models/component_models/dropdown_search_model.dart';
 
 class ActivityFormModel extends BaseModel{
@@ -35,6 +36,7 @@ class ActivityFormModel extends BaseModel{
   String isWithUpperUnitStr;
   List<DropdownSearchModel> categorySelects;
   List<int> participants;
+  List<AttachmentDialogModel> images;
 
 
   ActivityFormModel({
@@ -68,8 +70,8 @@ class ActivityFormModel extends BaseModel{
     this.isPublic,
     this.isOnline,
     this.inviteLink,
-    this.participants
-
+    this.participants,
+    this.images,
   });
 
   @override
@@ -114,15 +116,21 @@ class ActivityFormModel extends BaseModel{
       activityTypeID:map["activityTypeID"],
       activityTypeStr:map["activityTypeStr"],
     );
-    var categorys=List<DropdownSearchModel>();
+    List<DropdownSearchModel> categorys=[];
     for(var item in map["categorySelects"]){
       categorys.add(DropdownSearchModel().fromMap(item));
     }
-    var participant=List<int>();
+    List<int> participant=[];
     for(var item in map["participants"]){
       model.participants.add(item);
     }
     model.categorySelects=categorys;
+    /*List<AttachmentDialogModel> images;
+    for(var item in map["images"]){
+      images.add(item);
+    }
+    model.images=images;*/
+
   }
 
   @override
@@ -158,5 +166,6 @@ class ActivityFormModel extends BaseModel{
     "isPublic":isPublic,
     "isWithUpperUnit":isWithUpperUnit,
     "participants": jsonEncode(participants),
+    //"images":jsonEncode(images),
   };
 }

@@ -12,15 +12,14 @@ class SplashScreen extends StatelessWidget {
       try{
         _viewModel=Provider.of<SecurityViewModel>(context);
          _viewModel.CurrentSesion().then((value){
-          if(value){
+          if(value=="1"){
             Navigator.of(context).pushReplacementNamed('/MainPage');
           }else{
-            Navigator.of(context).pushReplacementNamed('/Login');
+            Navigator.of(context).pushReplacementNamed('/Login',arguments: {"message":value});
           }
         });
       }catch(e){
-        Navigator.of(context).pushReplacementNamed('/Login');
-        throw e;
+        Navigator.of(context).pushReplacementNamed('/Login',arguments: {"message":e.toString()});
       }
       send=false;
     }

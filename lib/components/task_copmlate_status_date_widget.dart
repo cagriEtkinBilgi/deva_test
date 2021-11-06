@@ -1,8 +1,11 @@
-import 'package:deva_test/components/text_field_date_picker_widget.dart';
+import 'package:deva_test/components/date_components/text_field_date_picker_widget.dart';
 import 'package:deva_test/models/component_models/dropdown_search_model.dart';
+import 'package:deva_test/models/component_models/select_list_widget_model.dart';
 import 'package:deva_test/models/task_models/task_status_form_model.dart';
 import 'package:deva_test/tools/apptool.dart';
 import 'package:flutter/material.dart';
+
+import 'check_list_components/selected_list_widget.dart';
 
 class TaskCoplateStatusDate extends StatefulWidget {
   int initVal;
@@ -28,7 +31,8 @@ class _TaskCoplateStatusDateState extends State<TaskCoplateStatusDate> {
 
   bool showStartDate=false;
   bool showEndDate=false;
-  List<DropdownMenuItem<int>> items;
+  //List<DropdownMenuItem<int>> items;
+  List<SelectListWidgetModel> items;
 
   @override
   void initState() {
@@ -41,29 +45,18 @@ class _TaskCoplateStatusDateState extends State<TaskCoplateStatusDate> {
     return Container(
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Durum Güncelle:",
-                style: TextStyle(
-                  fontSize: 18
-                ),
-              ),
-              DropdownButton<int>(
-                value: widget.model.taskStatus,
-                items: items,
-                onChanged: (selected){
-                  setState(() {
-                    widget.model.taskStatus=selected;
-                    widget.onChangeStatus(widget.model);
-                    _prepareDates();
-                  });
-                },
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 5,
+          SelectedListWidget(
+            title: "Durum Seç",
+            height: MediaQuery.of(context).size.height-400,
+            multiple: false,
+            items: items,
+            onChangeStatus: (List<SelectListWidgetModel> val){
+              setState(() {
+                widget.model.taskStatus=val.first.id;
+                widget.onChangeStatus(widget.model);
+                _prepareDates();
+              });
+            },
           ),
           Visibility(
             visible: showStartDate,
@@ -89,7 +82,8 @@ class _TaskCoplateStatusDateState extends State<TaskCoplateStatusDate> {
                 widget.onChangeStatus(widget.model);
               },
             ),
-          ),
+          )
+
         ],
       ),
     );
@@ -120,11 +114,11 @@ class _TaskCoplateStatusDateState extends State<TaskCoplateStatusDate> {
       }
   }
 
-  List<DropdownMenuItem<int>> _getItems() {
+  List<SelectListWidgetModel> _getItems() {
     var menuItems=AppTools.getTaskStatus();
-    var items=List<DropdownMenuItem<int>>();
+    List<SelectListWidgetModel> items=[];
     for(var item in menuItems){
-      items.add(DropdownMenuItem<int> (child: Text(item.value),value:item.id,));
+      items.add(SelectListWidgetModel(title: item.value,id: item.id));
     }
     return items;
   }

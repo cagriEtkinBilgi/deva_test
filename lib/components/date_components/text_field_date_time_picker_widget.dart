@@ -35,6 +35,7 @@ class _TextFieldDateTimePickerWidgetState extends State<TextFieldDateTimePickerW
 
   @override
   void initState() {
+    print(widget.initTime);
     textControllerDate.text =formatDate(widget.initDateTime, [dd, '.', mm, '.', yyyy]);
     selectedDate =formatDate(widget.initDateTime, [dd, '.', mm, '.', yyyy]);
     textControllerTime.text=widget.initTime.hour.toString()+":"+widget.initTime.minute.toString();
@@ -122,10 +123,13 @@ class _TextFieldDateTimePickerWidgetState extends State<TextFieldDateTimePickerW
       context: context,
       initialTime:TimeOfDay.now(),
     );
-    setState(() {
-      selectedMinute=picketTime.format(context);
-      textControllerTime.text=selectedMinute;
-      widget.onChangedDate(selectedDate,selectedMinute);
-    });
+    if(picketTime!=null){
+      setState(() {
+        selectedMinute=picketTime.format(context);
+        textControllerTime.text=selectedMinute;
+        widget.onChangedDate(selectedDate,selectedMinute);
+      });
+    }
+
   }
 }

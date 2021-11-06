@@ -93,7 +93,7 @@ class BaseApi{
             var bodys= reponse.data["objectList"];
             var baseListModel=BaseListModel<T>();
             baseListModel.outarized=reponse.data["authorizationStatus"];
-            var datas=List<T>();
+            List<T> datas=[];
             for(var i in bodys){
               var md=model.fromMap(i);
               datas.add(md);
@@ -127,7 +127,6 @@ class BaseApi{
           message: response.data["message"]?? "Bir Hata Oluştu",
       );
     }
-
   }
 
 }

@@ -21,8 +21,9 @@ class _LocationTextWidgetState extends State<LocationTextWidget> {
   LocationData _locationData;
   bool _isServiceEnable;
   @override
-  void initState() {
+  void initState(){
     locationText=TextEditingController(text: widget.initVal??"");
+    _getLocation();
     super.initState();
   }
 
@@ -48,28 +49,33 @@ class _LocationTextWidgetState extends State<LocationTextWidget> {
           child: TextButton(
             child: Icon(Icons.add_location),
             onPressed: () async {
-              _isServiceEnable=await _location.serviceEnabled();
-              if(!_isServiceEnable){
-                _isServiceEnable= await  _location.requestService();
-                if(_isServiceEnable) return;
-              }
-              _permissionStatus=await _location.hasPermission();
-              if(_permissionStatus==PermissionStatus.denied){
-                _permissionStatus=await _location.requestPermission();
-                if(_permissionStatus!= PermissionStatus.granted) return;
-              }
-              _locationData=await _location.getLocation();
-              setState(() {
-                var text="${_locationData.latitude} ${_locationData.longitude}";
-                locationText.text=text;
-                widget.onChange(text);
-              });
-
+              await _getLocation();
 
             },
           ),
         )
       ],
     );
+
+  }
+  _getLocation() async{
+    _isServiceEnable=await _location.serviceEnabled();
+    if(!_isServiceEnable){
+      _isServiceEnable= await  _location.requestService();
+      if(_isServiceEnable) return;
+    }
+    _permissionStatus=await _location.hasPermission();
+    if(_permissionStatus==PermissionStatus.denied){
+      _permissionStatus=await _location.requestPermission();
+      if(_permissionStatus!= PermissionStatus.granted) return;
+    }
+    _locationData=await _location.getLocation();
+    setState(() {
+      var text="${_locationData.latitude} ${_locationData.longitude}";
+      locationText.text=text;
+      widget.onChange(text);
+    });
+
+
   }
 }

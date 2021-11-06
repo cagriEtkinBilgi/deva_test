@@ -91,7 +91,7 @@ class TaskDetailMainLayout extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(right: 25,bottom: 25),
                 child: FloatingActionButton(
-                  child: Icon(Icons.add),
+                  child: Icon(Icons.done),
                   onPressed: (){
                     Navigator.of(context).pushNamed('/TaskComplateFormPage',
                         arguments: {"id":id,"title":detail.name}).then((value){

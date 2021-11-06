@@ -1,9 +1,11 @@
+import 'package:deva_test/components/appbar_flexible_background/flexible_space_background.dart';
 import 'package:deva_test/components/build_progress_widget.dart';
 import 'package:deva_test/components/error_widget.dart';
 import 'package:deva_test/components/message_dialog.dart';
 import 'package:deva_test/data/view_models/task_view_model.dart';
 import 'package:deva_test/enums/api_state.dart';
 import 'package:deva_test/screens/base_class/base_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:deva_test/components/task_copmlate_status_date_widget.dart';
 import 'package:deva_test/models/task_models/task_status_form_model.dart';
@@ -24,6 +26,7 @@ class TaskComplateFormPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("$title - Görev Güncelle"),
+        flexibleSpace: FlexibleSpaceBackground(),
       ),
       body: buildScrean(),
     );
@@ -51,24 +54,24 @@ class TaskComplateFormPage extends StatelessWidget {
 
     return Card(
       child: Form(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: TaskCoplateStatusDate(
-                init: 0,
-                onChangeStatus: (TaskStatusFormModel model){
-                  formModel=model;
-
-                },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 9,
+                child: TaskCoplateStatusDate(
+                  init: 0,
+                  onChangeStatus: (TaskStatusFormModel model){
+                    formModel=model;
+                  },
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
+              Container(
                 width: double.infinity,
-                child: RaisedButton(
+                child: ElevatedButton(
+
                   onPressed: () async {
                     try{
                       formModel.id=id;
@@ -83,17 +86,16 @@ class TaskComplateFormPage extends StatelessWidget {
                       CustomDialog.instance.exceptionMessage(context,model: e);
                     }
                   },
-                  color: Colors.blue,
                   child: Text("Kaydet",
                     style: TextStyle(
                     color: Colors.white
                   ),
                   ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
 
+          ),
         ),
       ),
     );

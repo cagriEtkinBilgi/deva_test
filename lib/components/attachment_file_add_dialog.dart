@@ -21,7 +21,6 @@ class _AttachmentFileAddDialogState extends State<AttachmentFileAddDialog> {
   String fileName= "...";
   var _formKey=GlobalKey<FormState>();
   var model=AttachmentDialogModel();
-  final picker = ImagePicker();
   bool showErrorModel=false;
   String errorMessage="Lütfen dosya seçin!";
 
@@ -63,12 +62,11 @@ class _AttachmentFileAddDialogState extends State<AttachmentFileAddDialog> {
               ),
               SizedBox(
                 width: double.infinity,
-                child: RaisedButton(
+                child: ElevatedButton(
 
                   onPressed: ()async{
                     await pickFile();
                   },
-                  color: Theme.of(context).primaryColor,
                   child: Text("Dosya",style: TextStyle(color: Colors.white),),
                 ),
               ),
@@ -122,7 +120,7 @@ class _AttachmentFileAddDialogState extends State<AttachmentFileAddDialog> {
         children: [
           Expanded(
             flex: 1,
-            child: FlatButton(
+            child: TextButton(
               onPressed: (){
                 Navigator.of(context).pop();
               },
@@ -131,7 +129,7 @@ class _AttachmentFileAddDialogState extends State<AttachmentFileAddDialog> {
           ),
           Expanded(
             flex: 1,
-            child: FlatButton(
+            child: TextButton(
               onPressed: () async {
                 if(_formKey.currentState.validate()){
                   if(model.file==null&&model.filePath==null){

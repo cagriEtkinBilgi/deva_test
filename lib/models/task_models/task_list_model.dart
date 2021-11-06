@@ -15,6 +15,8 @@ class TaskListModel extends BaseModel{
   String user;
   String taskCategory;
   int authorizationStatus;
+  String plannedStartDate;
+  String plannedEndDate;
 
 
   TaskListModel({
@@ -28,7 +30,9 @@ class TaskListModel extends BaseModel{
     this.desc,
     this.user,
     this.taskCategory,
-    this.authorizationStatus
+    this.authorizationStatus,
+    this.plannedStartDate,
+    this.plannedEndDate
   });
 
   @override
@@ -45,6 +49,8 @@ class TaskListModel extends BaseModel{
     assignerNameSurname: map["assignerNameSurname"],
     taskStatus: map["taskStatus"],
     authorizationStatus: map["authorizationStatus"],
+    plannedStartDate: map["plannedStartDate"],
+    plannedEndDate: map["plannedEndDate"],
 
   );
 
@@ -61,7 +67,9 @@ class TaskListModel extends BaseModel{
     "assignerNameSurname":assignerNameSurname,
     "taskStatus":taskStatus,
     "taskPriority":taskPriority,
-    "authorizationStatus":authorizationStatus
+    "authorizationStatus":authorizationStatus,
+    "plannedStartDate":plannedStartDate,
+    "plannedEndDate":plannedEndDate,
   };
 
 }

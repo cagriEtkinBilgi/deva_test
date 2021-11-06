@@ -1,3 +1,4 @@
+import 'package:deva_test/components/appbar_flexible_background/flexible_space_background.dart';
 import 'package:deva_test/components/build_progress_widget.dart';
 import 'package:deva_test/components/data_search_widget.dart';
 import 'package:deva_test/components/error_widget.dart';
@@ -17,7 +18,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ActivitiePage extends StatelessWidget {
   int typeID;
-  ActivitiePage({Map args}){
+  int selectedFilter;
+  ActivitiePage({Map args,this.selectedFilter=-1}){
     if(args["typeID"]!=null)
       typeID=args["typeID"];
   }
@@ -31,11 +33,11 @@ class ActivitiePage extends StatelessWidget {
       },
       child: BaseView<ActivityViewModel>(
         onModelReady: (model){
-          model.getActivitys(typeID);
+          model.getActivitys(typeID,selectedFilter);
         },
         builder:(context,model,child)=> Scaffold(
           appBar: AppBar(
-            title: Text("Faliyetler"),
+            title: _buildTitle(typeID),
             elevation: AppTools.getAppBarElevation(),
             actions: [
               IconButton(
@@ -50,8 +52,20 @@ class ActivitiePage extends StatelessWidget {
                   }
 
               ),
-              //IconButton(icon: Icon(Icons.more_vert), onPressed: (){})
+              IconButton(
+                  icon: Icon(Icons.format_list_bulleted),
+                  tooltip: "Filtreler",
+                  onPressed: () async {
+                    var result= await Navigator.pushNamed<dynamic>(context,'/ActivityFilter',arguments: {"selectedID":selectedFilter});
+                    if(result!=null){
+                      selectedFilter=result;
+                      await model.getActivitys(typeID,selectedFilter);
+                    }
+                  }
+
+              ),
             ],
+            flexibleSpace: FlexibleSpaceBackground(),
           ),
           drawer: NavigationDrawer(),
           bottomNavigationBar: NavigationBar(selectedIndex: 0,),
@@ -70,6 +84,15 @@ class ActivitiePage extends StatelessWidget {
     );
   }
 
+  Text _buildTitle(int type){
+    if(type==2)
+      return Text("Açık Faliyetler");
+    if(type==1)
+      return Text("Benim Faliyetlerim");
+    else
+      return Text("Faliyetler");
+  }
+
   Widget buildScreen(context, ActivityViewModel model){
     if(model.apiState==ApiStateEnum.LoadedState){
       return buildListView(model);
@@ -85,14 +108,14 @@ class ActivitiePage extends StatelessWidget {
       onNotification:(t){
         if (t.metrics.pixels >0 && t.metrics.atEdge) {
           if(!model.isPageLoding){
-            model.getActivityNextPage(typeID);
+            model.getActivityNextPage(typeID,selectedFilter);
           }
         }
         return null;
       },
       child: RefreshIndicator(
         onRefresh: () async{
-          return await model.getActivitys(typeID);
+          return await model.getActivitys(typeID,selectedFilter);
         },
         child: Stack(
           children: [
@@ -109,7 +132,7 @@ class ActivitiePage extends StatelessWidget {
                     padding: EdgeInsets.only(top: 4,bottom: 10),
                     child: Slidable(
                       actionPane: SlidableDrawerActionPane(),
-                      actionExtentRatio: 0.25,
+                      actionExtentRatio: 0.20,
                       child: Row(
                           children: [
                             Expanded(
@@ -124,31 +147,30 @@ class ActivitiePage extends StatelessWidget {
                                         subtitle: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            buildListText(listItem.workGroup),
+                                            buildListText(listItem.desc),
+                                            SizedBox(height: 8,),
+                                            Row(
+                                              mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Expanded(
+
+                                                  child:Text(listItem.workGroup,style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: Theme.of(context).accentColor
+                                                  ),),
+                                                ),
+                                                SizedBox(
+                                                  width: 100,
+                                                  child: buildStatus(context,listItem.activityStatus),
+                                                )
+
+                                              ],
+                                            )
                                           ],
-                                        )
+                                        ),
+                                      leading: _buildCardLeading(listItem),
                                     ),
                                   ),
-                                  Padding(
-                                    padding:  EdgeInsets.only(left: 16,right: 16),
-                                    child: Container(
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text("Durum",style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Theme.of(context).accentColor
-                                              ),),
-                                              buildStatus(context,listItem.activityStatus),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  )
-
                                 ],
                               ),
                             ),
@@ -157,7 +179,6 @@ class ActivitiePage extends StatelessWidget {
                             )
                           ],
                         ),
-
                       secondaryActions: secondaryActions(
                           context,
                           model,
@@ -182,13 +203,16 @@ class ActivitiePage extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.only(top: 2,bottom: 2,left: 8,right: 8),
-        child: Text(ActicityColors.getActivityStatusText(status),style: TextStyle(
-          color: Colors.white,
-          fontSize: 12,
-        ),),
+        child: Center(
+          child: Text(ActicityColors.getActivityStatusText(status),style: TextStyle(
+            color: Colors.white,
+            fontSize: 12,
+          ),),
+        ),
       ),
     );
   }
+
   Text buildListText(String desc) {
     if(desc==null)
       return Text("");
@@ -196,6 +220,18 @@ class ActivitiePage extends StatelessWidget {
     return Text(desc.substring(0,50)+"...");
     }else
       return Text(desc);
+  }
+
+  Widget _buildCardLeading(ActivityListModel model){
+    var dateStrs=model.plannedStartDate.split('-');
+    var dayStr=dateStrs[2].split('T');
+    return Column(
+      children: [
+          Text(dayStr[0],style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 20),),
+          Text(dateStrs[1],style:TextStyle(fontSize: 12),),
+          Text(dateStrs[0],style:TextStyle(fontSize: 12),),
+      ],
+    );
   }
 
   List<Widget> secondaryActions(BuildContext context,ActivityViewModel model,ActivityListModel listModel) {
@@ -212,9 +248,17 @@ class ActivitiePage extends StatelessWidget {
               "title":listModel.name,
             }).then((value){
               if(value==true){
-                model.getActivitys(typeID);
+                model.getActivitys(typeID,selectedFilter);
               }
             });
+          },
+        ),
+        IconSlideAction(
+          caption: 'Tamamla',
+          color: Colors.lightBlue,
+          icon: Icons.check_outlined,
+          onTap: () {
+            Navigator.pushNamed<dynamic>(context,'/ActivitiesCompleteForm',arguments: {"id":listModel.id});
           },
         ),
         IconSlideAction(
@@ -237,9 +281,14 @@ class ActivitiePage extends StatelessWidget {
               context,
               title: "Silme Onayı",
               cont: "${listModel.name} - Faliyetini Silmek İstediğiniden Emin Misiniz?"
-            ).then((value){
+            ).then((value) async {
               if(value){
-                //evet
+                 await model.deleteActivity(listModel.id).then((value) =>{
+                   if(value){
+                     model.getActivitys(typeID,selectedFilter)
+                   }
+                 });
+
               }
             });
           },
@@ -261,6 +310,7 @@ class ActivitiePage extends StatelessWidget {
     }
 
   }
+
   Container buildPagePrgres(bool isLoading) {
     return (!isLoading)?Container():Container(
       child: ProgressWidget(),

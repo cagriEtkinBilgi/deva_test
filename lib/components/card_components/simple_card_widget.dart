@@ -9,6 +9,7 @@ class SimpleCardWidget extends StatelessWidget {
   IconData icon;
   String subTitle;
   Function onClick;
+  double height;
 
   SimpleCardWidget({
     this.title,
@@ -17,7 +18,9 @@ class SimpleCardWidget extends StatelessWidget {
     this.icon,
     this.count,
     this.textColor,
-    this.decorationColor
+    this.decorationColor,
+    this.height=80,
+
   });
 
   @override
@@ -25,7 +28,7 @@ class SimpleCardWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onClick,
       child: Container(
-        height: 110,
+        height: height,
         decoration: BoxDecoration(
             color: decorationColor,
             borderRadius: BorderRadius.circular(5.0),
@@ -55,17 +58,17 @@ class SimpleCardWidget extends StatelessWidget {
                   children: [
                     Text(title,
                         style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: textColor
                         )
                     ),
                     SizedBox(
-                      height: 15,
+                      height: 8,
                     ),
                     Text(subTitle,
                         style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.w500,
                             color: textColor
                         )
@@ -92,7 +95,4 @@ class SimpleCardWidget extends StatelessWidget {
       ),
     );
   }
-
-
-
 }

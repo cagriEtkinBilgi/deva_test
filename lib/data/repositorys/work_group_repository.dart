@@ -12,7 +12,6 @@ class WorkGroupRepository{
     try{
       BaseListModel<WorkGroupModel> response=
       await BaseApi.instance.dioGet<WorkGroupModel>("/WorkGroup/GetWorkGroupsList/$pageID",WorkGroupModel(),token: token,params: params);
-
       return response;
     }catch(e){
       throw e;

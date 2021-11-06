@@ -1,3 +1,4 @@
+import 'package:deva_test/components/appbar_flexible_background/flexible_space_background.dart';
 import 'package:deva_test/components/data_search_widget.dart';
 import 'package:deva_test/components/error_widget.dart';
 import 'package:deva_test/components/navigation_bar.dart';
@@ -23,6 +24,7 @@ class WorkGroupPage extends StatelessWidget {
       child:  Scaffold(
           appBar: AppBar(
             title: Text("Çalışma Grupları"),
+            flexibleSpace: FlexibleSpaceBackground(),
             elevation: AppTools.getAppBarElevation(),
             actions: [
               IconButton(
@@ -111,7 +113,6 @@ class WorkGroupPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(prePareDesc(listItem.userName)),
-
                                 ],
                               )
                             ),
@@ -161,6 +162,8 @@ class WorkGroupPage extends StatelessWidget {
       );
   }
   String prePareDesc(String desc){
+    if(desc==null)
+      return "";
     if(desc.length>40){
       return desc=desc.substring(0,40)+"...";
     }

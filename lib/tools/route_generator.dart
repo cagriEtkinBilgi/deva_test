@@ -1,4 +1,5 @@
 
+import 'package:deva_test/screens/activitie_pages/activiti_layouts/activity_filter_page.dart';
 import 'package:deva_test/screens/activitie_pages/activiti_page.dart';
 import 'package:deva_test/screens/activitie_pages/activity_complete_form.dart';
 import 'package:deva_test/screens/activitie_pages/activity_cretae_page.dart';
@@ -15,6 +16,7 @@ import 'package:deva_test/screens/security/splash_screen.dart';
 import 'package:deva_test/screens/security/update_user_profile_form.dart';
 import 'package:deva_test/screens/task_pages/task_detail_page.dart';
 import 'package:deva_test/screens/task_pages/task_form_page.dart';
+import 'package:deva_test/screens/task_pages/task_layouts/task_filter_page.dart';
 import 'package:deva_test/screens/task_pages/tasks_page.dart';
 import 'package:deva_test/screens/task_pages/task_complate_form_page.dart';
 import 'package:deva_test/screens/workgroup_pages/workgroup_detail_page.dart';
@@ -30,7 +32,8 @@ class RouteGenerator{
           return MaterialPageRoute(builder: (_)=>SplashScreen());
           break;
         case '/Login':
-          return MaterialPageRoute(builder: (_)=>LoginPage());
+          final args=settings.arguments;
+          return MaterialPageRoute(builder: (_)=>LoginPage(args: args,));
           break;
         case '/MainPage':
           return MaterialPageRoute(builder: (_)=>HomePage());
@@ -45,6 +48,10 @@ class RouteGenerator{
         case '/ActivitiesPage':
           final args=settings.arguments;//Parametre Düzenlenecek
           return MaterialPageRoute(builder: (_)=>ActivitiePage(args: args));
+          break;
+        case '/ActivityFilter':
+          final args=settings.arguments;
+          return MaterialPageRoute(builder: (_)=>ActivityFilterPage(args: args));
           break;
         case '/ActivitiesDetailPage':
           final args=settings.arguments;//Parametre Düzenlenecek
@@ -64,6 +71,10 @@ class RouteGenerator{
         case '/TaskDetailPage':
           final args=settings.arguments;//Parametre Map
           return MaterialPageRoute(builder: (_)=>TaskDetailPage(args: args,));
+          break;
+        case '/TaskFilterPage':
+          final args=settings.arguments;//Parametre Map
+          return MaterialPageRoute(builder: (_)=>TaskFilterPage(args: args,));
           break;
         case '/TaskFormPage':
           final args=settings.arguments;//Parametre Map

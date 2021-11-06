@@ -28,10 +28,11 @@ class WorkGroupViewModel extends BaseViewModel {
     PageID=1;
     try{
       var sesion=await SecurityViewModel().getCurrentSesion();
-       BaseListModel<WorkGroupModel> retVal= await repo.getWorkGroups(sesion.token, 0);
+       BaseListModel<WorkGroupModel> retVal= await repo.getWorkGroups(sesion.token, PageID);
       workGroups=retVal.datas;
       canEdit=(retVal.outarized==2);
       setState(ApiStateEnum.LoadedState);
+      PageID++;
       return retVal.datas;
     }catch(e){
       if(e is ErrorModel){

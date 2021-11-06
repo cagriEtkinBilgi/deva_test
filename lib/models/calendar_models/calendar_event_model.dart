@@ -15,7 +15,7 @@ class CalendarEventModel extends BaseModel {
   String timeText;
   int type;
   String color;
-
+  int authorizationStatus;
 
   @override
   int outarized;
@@ -36,8 +36,8 @@ class CalendarEventModel extends BaseModel {
       this.endTime,
       this.timeText,
       this.type,
+      this.authorizationStatus,
       this.color});
-
   @override
   fromJson(String str) => fromMap(json.decode(str));
 
@@ -49,13 +49,12 @@ class CalendarEventModel extends BaseModel {
     startTime:map['startTime'],
     title:map['title'],
     timeText:map['timeText'],
-    //endDate:map['endDate'],
-    //startDate:map['startDate'],
     endDateStr:map['endDateStr'],
     endTime:map['endTime'],
     startDateStr:map['startDateStr'],
     type: map['type'],
     url: map['url'],
+    authorizationStatus: map["authorizationStatus"],
   );
 
   @override
@@ -65,8 +64,6 @@ class CalendarEventModel extends BaseModel {
   @override
   Map<String, dynamic> toMap() => {
     'id':id,
-    //'endDate':endDate,
-    //'startDate':startDate,
     'title':title,
     'startDateStr':startDateStr,
     'endDateStr':endDateStr,
@@ -74,6 +71,7 @@ class CalendarEventModel extends BaseModel {
     'type':type,
     'startTime':startTime,
     'color':color,
+    'authorizationStatus':authorizationStatus
   };
 
 

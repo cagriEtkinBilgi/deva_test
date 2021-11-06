@@ -6,6 +6,7 @@ import 'package:deva_test/tools/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../error_model.dart';
+import 'package:connectivity/connectivity.dart';
 
 
 class SecurityViewModel with ChangeNotifier {
@@ -38,7 +39,6 @@ class SecurityViewModel with ChangeNotifier {
     var shrd= await SharedPreferences.getInstance();
     try{
       var sesionModel= await repo.login(model);
-      print(sesionModel);
       if(sesionModel!=null){
         shrd.setString("token", sesionModel.toJson());
         shrd.setString("rememberMe", model.toJson());
@@ -53,26 +53,34 @@ class SecurityViewModel with ChangeNotifier {
       throw e;
     }
   }
-  Future<bool> CurrentSesion() async {
+  Future<String> CurrentSesion() async {
     try{
+      final Connectivity _connectivity = Connectivity();
+      var result = await _connectivity.checkConnectivity();
+      if(result==ConnectivityResult.none)
+        return "İnternet Bağlantısı Sağlanamadı";
+
       var shrd= await SharedPreferences.getInstance();
+
       var currendSesion=shrd.getString("rememberMe");
       if(currendSesion!=null){
         var loginModel=LoginModel().fromJson(currendSesion);
         var retVal= await Login(loginModel);//login istekleri kendini tekrarlıyor!!
-
         if(retVal!=null){
-          return true;
+          return "1";
         }else{
-          return false;
+          return "Hata Oluştu";
         }
 
       }else{
-        return false;
+        return "";
       }
     }catch(e){
-      return false;
+      throw e;
     }
+  }
+  String checkConnection(){
+
   }
 
   Future<SesionModel> getCurrentSesion() async {

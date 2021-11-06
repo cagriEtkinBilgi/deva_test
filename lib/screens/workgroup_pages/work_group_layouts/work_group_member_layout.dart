@@ -5,7 +5,6 @@ import 'package:deva_test/data/view_models/work_group_view_model.dart';
 import 'package:deva_test/enums/api_state.dart';
 import 'package:deva_test/models/workgroups_models/workgroups_model.dart';
 import 'package:deva_test/screens/base_class/base_view.dart';
-import 'package:deva_test/tools/apptool.dart';
 import 'package:flutter/material.dart';
 
 class WorkGroupMemberLayout extends StatelessWidget {

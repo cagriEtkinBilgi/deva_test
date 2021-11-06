@@ -1,3 +1,4 @@
+import 'package:deva_test/components/appbar_flexible_background/flexible_space_background.dart';
 import 'package:deva_test/components/build_progress_widget.dart';
 import 'package:deva_test/components/card_components/button_card_min_widget.dart';
 import 'package:deva_test/components/dashbord_card_widget.dart';
@@ -45,6 +46,8 @@ class HomePage extends StatelessWidget {
             ),
             //IconButton(icon: Icon(Icons.more_vert), onPressed: (){})
           ],
+          flexibleSpace: FlexibleSpaceBackground(),
+
         ),
         body: Center(
           child: buildScreen(),
@@ -109,39 +112,31 @@ class HomePage extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: SimpleCardMinWidget(
-                  title: "Faaliyetlerim",
-                  decorationColor: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
-                  countColor: Colors.white,
-                  count: model.dashboard.activitiesCount,
-                  onClick: () {
-                    Navigator.of(context).pushReplacementNamed('/ActivitiesPage',arguments: {"typeID":0});
-                  },
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                flex: 1,
-                child: SimpleCardMinWidget(
-                  title: "Açık Faliyetler",
-                  decorationColor: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
-                  countColor: Colors.white,
-                  count: model.dashboard.publicActivitiesCount,
-                  onClick: () {
-                    Navigator.of(context).pushReplacementNamed('/ActivitiesPage',arguments: {"typeID":1});
-                  },
-                ),
-              ),
+          SimpleCardWidget(
+            title: "Faaliyetlerim",
+            decorationColor: Theme.of(context).primaryColor,
+            icon: Icons.assignment_turned_in_rounded,
+            textColor: Colors.white,
+            subTitle: "Katılmam Gereken Faaliyetler",
+            count: model.dashboard.activitiesCount,
+            onClick: () {
+              Navigator.of(context).pushReplacementNamed('/ActivitiesPage',arguments: {"typeID":1});
+            },
+          ),
 
-            ],
+          SizedBox(
+            height: 10,
+          ),
+          SimpleCardWidget(
+            title: "Açık Faaliyetler",
+            decorationColor: Theme.of(context).primaryColor,
+            icon: Icons.assignment_turned_in_outlined ,
+            textColor: Colors.white,
+            subTitle: "Katılabileceğim Faaliyetler",
+            count: model.dashboard.publicActivitiesCount,
+            onClick: () {
+              Navigator.of(context).pushReplacementNamed('/ActivitiesPage',arguments: {"typeID":2});
+            },
           ),
           SizedBox(
             height: 10,
@@ -150,8 +145,8 @@ class HomePage extends StatelessWidget {
             title: "Takvimim",
             decorationColor: Theme.of(context).primaryColor,
             textColor: Colors.white,
-            icon: Icons.calendar_today_outlined,
-            subTitle: "Görev Ve Faaliyet Takvimi",
+            icon: Icons.calendar_today,
+            subTitle: "Görev ve Faaliyet Takvimi",
             count: 0,
             onClick: () {
               Navigator.of(context).pushReplacementNamed('/CalendarMainPage');
@@ -161,12 +156,38 @@ class HomePage extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Row(
+          SimpleCardWidget(
+            title: "Görevler",
+            decorationColor: Theme.of(context).primaryColor,
+            icon: Icons.fact_check_outlined,
+            textColor: Colors.white,
+            subTitle: "Tamamlamam Gereken Görevler",
+            count: model.dashboard.tasksCount,
+            onClick: () {
+              Navigator.of(context).pushReplacementNamed('/TasksPage');
+            },
+          ),
+          SizedBox(
+            height: 10,
+          ),
+
+          SimpleCardWidget(
+            title: "Faaliyet Ekle",
+            decorationColor: Theme.of(context).primaryColor,
+            textColor: Colors.white,
+            icon: Icons.add,
+            subTitle: "Yeni Faaliyet OLuştur",
+            count: 0,
+            onClick: () {
+              Navigator.pushNamed<dynamic>(context,'/CreateActivity');
+            },
+          ),
+          /*Row(
             children: [
               Expanded(
                 flex: 1,
                 child: SimpleCardMinWidget(
-                  title: "Aksiyonlar",
+                  title: "Görevler",
                   decorationColor: Theme.of(context).primaryColor,
                   textColor: Colors.white,
                   countColor: Colors.white,
@@ -194,7 +215,7 @@ class HomePage extends StatelessWidget {
                 ),
               )
             ],
-          ),
+          ),*/
 
         ],
       ),

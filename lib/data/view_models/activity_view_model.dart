@@ -9,6 +9,7 @@ import 'package:deva_test/models/activity_models/activity_detail_model.dart';
 import 'package:deva_test/models/activity_models/activity_form_model.dart';
 import 'package:deva_test/models/activity_models/activity_list_model.dart';
 import 'package:deva_test/models/activity_models/activity_participants_model.dart';
+import 'package:deva_test/models/activity_models/activity_participants_status_model.dart';
 import 'package:deva_test/models/activity_note_model/activity_note_list_model.dart';
 import 'package:deva_test/models/base_models/base_list_model.dart';
 import 'package:deva_test/models/component_models/attachment_dialog_model.dart';
@@ -26,23 +27,22 @@ class ActivityViewModel extends BaseViewModel{
   List<ActivityNoteModel> activityNotes;
   List<ActivityAttachmentModel> activityFiles;
   List<ActivityAttachmentModel> activityImages;
+  List<ActivityParticipantsStatusModel> participants;
+
   ActivityDetailModel activity;
   ActivityFormModel formModel;
   ActivityCompleteModel completeFormModel;
 
   var repo=locator<ActivityRepository>();
 
-  Future<List<ActivityListModel>> getActivitys(int typeID) async {
-    PageID=1;
+  Future<List<ActivityListModel>> getActivitys(int typeID,int periot) async {
     try{
+      PageID=1;
       var sesion=await SecurityViewModel().getCurrentSesion();
       BaseListModel<ActivityListModel> retVal;
-      if(typeID==1)
-        retVal=await repo.getPublicActivitys(sesion.token, 0);
-      else
-        retVal=await repo.getActivitys(sesion.token, 0);
-
+      retVal=await repo.getActivitys(sesion.token,PageID,typeID,periot);
       activitys=retVal.datas;
+      PageID++;
       canEdit=(retVal.outarized==2);
       setState(ApiStateEnum.LoadedState);
       return activitys;
@@ -118,16 +118,14 @@ class ActivityViewModel extends BaseViewModel{
 
   }
 
-  Future<List<ActivityListModel>> getActivityNextPage(int typeID) async{
+  Future<List<ActivityListModel>> getActivityNextPage(int typeID,int periot) async{
     isPageLoding=true;
     notifyListeners();
     try{
       var sesion=await SecurityViewModel().getCurrentSesion();
       BaseListModel<ActivityListModel> retVal;
-      if(typeID==1)
-        retVal=await repo.getPublicActivitys(sesion.token, PageID);
-      else
-        retVal=await repo.getActivitys(sesion.token, PageID);
+
+      retVal=await repo.getActivitys(sesion.token,PageID,typeID,periot);
 
       if(retVal.datas.length!=0){
         activitys.addAll(retVal.datas);
@@ -211,7 +209,7 @@ class ActivityViewModel extends BaseViewModel{
       var sesion=await SecurityViewModel().getCurrentSesion();
       BaseListModel<ActivityParticipantsModel> retVal= await repo.getParticipantsUser(sesion.token, id);
       var models =retVal.datas.map((e) => e.toCheckListModel()).toList();
-      print("deneme");
+
       return models;
     }catch(e){
       return e;
@@ -231,9 +229,22 @@ class ActivityViewModel extends BaseViewModel{
 
   }
 
+  Future <List<ActivityParticipantsStatusModel>> getActivityParticipant(int id) async {
+    try{
+      var sesion=await SecurityViewModel().getCurrentSesion();
+      BaseListModel<ActivityParticipantsStatusModel> retVal= await repo.getActivityParticipantStatus(sesion.token, id);
+      participants=retVal.datas;
+      setState(ApiStateEnum.LoadedState);
+      return retVal.datas;
+    }catch(e){
+      return e;
+    }
+
+  }
+
   Future <bool> updateParticipantsUser(List<CheckListModel> chkModels,int id) async {
     try{
-      var listUser=List<ActivityParticipantsModel>();
+      List<ActivityParticipantsModel> listUser=[];
       for(var item in chkModels){
         listUser.add(ActivityParticipantsModel(
           id: item.id,
@@ -385,6 +396,20 @@ class ActivityViewModel extends BaseViewModel{
       return true;
     }catch(e){
       throw e;
+    }
+
+  }
+
+  Future<bool> deleteActivity(int id) async {
+  print(id);
+    try{
+      var sesion=await SecurityViewModel().getCurrentSesion();
+      BaseListModel<ActivityFormModel>
+      retVal= await repo.deleteActivity(sesion.token,id);
+
+      return true;
+    }catch(e){
+      return false;
     }
 
   }

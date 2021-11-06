@@ -5,6 +5,7 @@ abstract class BaseModel<T>{
 
   DateTime get resultDate;
   set resultDate (DateTime value);
+
   T fromJson(String str);
   T fromMap(Map<String,Object> map);
 

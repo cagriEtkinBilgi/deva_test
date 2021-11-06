@@ -1,4 +1,6 @@
+import 'package:deva_test/data/repositorys/activity_repository.dart';
 import 'package:deva_test/data/repositorys/calendar_repository.dart';
+import 'package:deva_test/data/repositorys/task_repository.dart';
 import 'package:deva_test/data/view_models/security_view_model.dart';
 import 'package:deva_test/enums/api_state.dart';
 import 'package:deva_test/models/base_models/base_list_model.dart';
@@ -11,6 +13,8 @@ import 'base_view_model.dart';
 class CalendarViewModel extends BaseViewModel {
 
   var repo=locator<CalendarRepository>();
+  var task=locator<TaskRepository>();
+  var activity=locator<ActivityRepository>();
 
   Map<DateTime, List<dynamic>> events;
   List selectedEvents;
@@ -78,6 +82,19 @@ class CalendarViewModel extends BaseViewModel {
       mapEvents.putIfAbsent(data.date, () => mapList);
     }
     return mapEvents;
+  }
+
+  eventDelete(int type,int id) async {
+    try{
+      if(type==2){
+        var sesion=await SecurityViewModel().getCurrentSesion();
+        var taskresult= await task.deleteTask(sesion.token, id);
+      }else{
+        //faliyet sil ya
+      }
+    }catch(e){
+
+    }
   }
 
 }

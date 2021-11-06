@@ -1,10 +1,11 @@
 import 'package:deva_test/components/address_components/address_dropdown_component.dart';
+import 'package:deva_test/components/appbar_flexible_background/flexible_space_background.dart';
 import 'package:deva_test/components/build_progress_widget.dart';
 import 'package:deva_test/components/dropdown_serach_widget.dart';
 import 'package:deva_test/components/error_widget.dart';
 import 'package:deva_test/components/form_checkbox_list_tile_Widget.dart';
 import 'package:deva_test/components/message_dialog.dart';
-import 'package:deva_test/components/text_field_date_picker_widget.dart';
+import 'package:deva_test/components/date_components/text_field_date_picker_widget.dart';
 import 'package:deva_test/data/view_models/public_relation_view_model.dart';
 import 'package:deva_test/enums/api_state.dart';
 import 'package:deva_test/screens/base_class/base_view.dart';
@@ -23,6 +24,7 @@ class AddNewRelationPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Gönüllü Ekle"),
+        flexibleSpace: FlexibleSpaceBackground(),
       ),
       body: buildScreen(),
     );

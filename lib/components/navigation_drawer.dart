@@ -69,18 +69,6 @@ class NavigationDrawer extends StatelessWidget {
                     Container(
                       height: tileHeigt,
                       child: ListTile(
-                        title: Text("Açık Faaliyetler",style:textStyle,),
-                        onTap: (){
-                          Navigator.of(context).pushReplacementNamed('/ActivitiesPage',arguments: {"typeID":1});
-                        },
-                        leading: Icon(Icons.speaker,color: Colors.grey,),
-                        trailing: Icon(Icons.arrow_forward_ios,color: Colors.grey,),
-                      ),
-                    ),
-                    Divider(color: Colors.grey,),
-                    Container(
-                      height: tileHeigt,
-                      child: ListTile(
                         title: Text("Aksiyonlar",style:textStyle,),
                         onTap: (){
                           Navigator.of(context).pushReplacementNamed('/TasksPage');

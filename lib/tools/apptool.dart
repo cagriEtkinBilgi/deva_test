@@ -11,7 +11,7 @@ class AppTools{
     }
   }
   static List<DropdownSearchModel> getRepetitionStatus(){
-    var repetitionStatus=List<DropdownSearchModel>();
+    List<DropdownSearchModel> repetitionStatus=[];
     repetitionStatus.add(DropdownSearchModel(id: 0,value: "Tekrarlanmıyor"));
     repetitionStatus.add(DropdownSearchModel(id: 1,value: "Günlük"));
     repetitionStatus.add(DropdownSearchModel(id: 2,value: "Haftalık"));
@@ -20,7 +20,7 @@ class AppTools{
   }
 
   static List<DropdownSearchModel> getTaskStatus(){
-    var repetitionStatus=List<DropdownSearchModel>();
+    List<DropdownSearchModel> repetitionStatus=[];
     repetitionStatus.add(DropdownSearchModel(id: 0,value: "Başlamadı"));
     repetitionStatus.add(DropdownSearchModel(id: 1,value: "Devam Ediyor"));
     repetitionStatus.add(DropdownSearchModel(id: 2,value: "Tamamlandı"));
@@ -30,15 +30,29 @@ class AppTools{
   }
 
   static List<DropdownSearchModel> getPriority(){
-    var repetitionStatus=List<DropdownSearchModel>();
+    List<DropdownSearchModel> repetitionStatus=[];
     repetitionStatus.add(DropdownSearchModel(id: 0,value: "Düşük"));
     repetitionStatus.add(DropdownSearchModel(id: 1,value: "Orta"));
     repetitionStatus.add(DropdownSearchModel(id: 2,value: "Önemli"));
     repetitionStatus.add(DropdownSearchModel(id: 3,value: "Acil"));//Bu alan Apilar tamamalanınca silinecek
     return repetitionStatus;
   }
+  static List<DropdownSearchModel> getDateTypes(){
+    List<DropdownSearchModel> repetitionStatus=[];
+    repetitionStatus.add(DropdownSearchModel(id: -1,value: "Tümü"));
+    repetitionStatus.add(DropdownSearchModel(id: 0,value: "Bu Hafta"));
+    repetitionStatus.add(DropdownSearchModel(id: 1,value: "Gelecek Hafta"));
+    repetitionStatus.add(DropdownSearchModel(id: 2,value: "Gelecek Ay"));
+    repetitionStatus.add(DropdownSearchModel(id: 3,value: "Gelecek 3 Ay"));
+    repetitionStatus.add(DropdownSearchModel(id: 4,value: "Gelecek 6 Ay"));
+    repetitionStatus.add(DropdownSearchModel(id: 5,value: "Geçen Hafta"));
+    repetitionStatus.add(DropdownSearchModel(id: 6,value: "Geçen Ay"));
+    repetitionStatus.add(DropdownSearchModel(id: 7,value: "Geçtiğimiz 3 Ay"));
+    repetitionStatus.add(DropdownSearchModel(id: 8 ,value: "Geçtiğimiz 6 Ay"));
+    return repetitionStatus;
+  }
   static List<DropdownSearchModel> getGender(){
-    var repetitionStatus=List<DropdownSearchModel>();
+    List<DropdownSearchModel> repetitionStatus=[];
     repetitionStatus.add(DropdownSearchModel(id: 0,value: "Kadın"));
     repetitionStatus.add(DropdownSearchModel(id: 1,value: "Erkek"));
     repetitionStatus.add(DropdownSearchModel(id: 2,value: "Belirtilmemiş"));
@@ -46,5 +60,5 @@ class AppTools{
     return repetitionStatus;
   }
   static String apiUri="https://www.devaportal.org";
-  //static String apiUri="https://192.168.1.29:45465";
+  //static String apiUri="https://192.168.1.25:45455";
 }

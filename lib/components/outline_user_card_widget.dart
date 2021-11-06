@@ -41,6 +41,7 @@ class OutlineUserCardWidget extends StatelessWidget {
       ),
     );
   }
+
   Widget avatarBuilder(String Uri) {
     if(Uri!=null){
       return CachedNetworkImage(

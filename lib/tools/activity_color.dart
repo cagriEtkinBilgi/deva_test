@@ -56,4 +56,23 @@ class ActicityColors{
     }
   }
 
+  static getActivityParticipanStatusText(int id){
+    if(id==0)
+      return "Katıldı";
+    else if(id==1)
+        return "Katılmadı";
+    else
+      return "Mazetli";
+  }
+  static getActivityParticipanStatusColor(int id){
+    if(id==0){
+      return Colors.green;
+    }else if(id==1){
+      return Colors.red;
+    }else{
+      return Colors.yellow;
+    }
+
+  }
+
 }
