@@ -45,9 +45,9 @@ dependencies:
   table_calendar: ^2.3.3
   flutter_launcher_icons: ^0.8.1
   url_launcher: ^6.0.9
-  firebase_auth: ^3.0.2
-  firebase_core: ^1.5.0
-  firebase_messaging: ^10.0.5
+  firebase_auth: ^3.2.0
+  firebase_core: ^1.10.0
+  firebase_messaging: ^11.1.0
   flutter_local_notifications: ^8.1.1+1
   mask_text_input_formatter: ^1.2.1
   location: ^4.3.0
