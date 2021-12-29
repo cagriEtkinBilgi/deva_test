@@ -11,6 +11,7 @@ import 'package:deva_test/data/repositorys/work_group_repository.dart';
 import 'package:deva_test/data/view_models/activity_create_view_model.dart';
 import 'package:deva_test/data/view_models/activity_view_model.dart';
 import 'package:deva_test/data/view_models/calendar_view_model.dart';
+import 'package:deva_test/data/view_models/conatct_view_model.dart';
 import 'package:deva_test/data/view_models/dashboard_view_model.dart';
 import 'package:deva_test/data/view_models/note_view_model.dart';
 import 'package:deva_test/data/view_models/profile_view_model.dart';
@@ -53,6 +54,7 @@ void setupLocator(){
   locator.registerFactory(() => SearchViewModel());
 
   locator.registerLazySingleton(() => PublicRelationRepository());
+  locator.registerLazySingleton(() => ContactViewModel());
   locator.registerFactory(() => PublicRelationViewModel());
 
 }

@@ -18,11 +18,11 @@ class DropdownSerachWidget extends StatelessWidget {
         (item?.value == null)
             ? ListTile(
           contentPadding: EdgeInsets.all(0),
-          title: Text(dropdownLabel,),
+            title: Text(dropdownLabel,),
         )
             :ListTile(
           contentPadding: EdgeInsets.all(0),
-          title: Text(item.value,),
+            title: Text(item.value,),
         )
     );
   }

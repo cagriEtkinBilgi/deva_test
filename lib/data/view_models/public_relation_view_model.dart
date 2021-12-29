@@ -21,7 +21,6 @@ class PublicRelationViewModel extends BaseViewModel{
 
   Future<PublicRelationUserCheckModel> getUserByPhoneNumber() async{
     try{
-
       showUserCard=false;
       setState(ApiStateEnum.LodingState);
       var sesion=await SecurityViewModel().getCurrentSesion();
@@ -33,7 +32,6 @@ class PublicRelationViewModel extends BaseViewModel{
       createModel.userSelectList=users.datas;
       checkedModel= await repo.getUserByPhoneNumber(sesion.token, phoneNumber);
       checkedModel.phoneNumber=phoneNumber;
-      createModel.phoneNumber=phoneNumber;
       showResult=true;
       createModel.referenceUserId=sesion.id;
       if(checkedModel.showCard==1){
@@ -65,6 +63,16 @@ class PublicRelationViewModel extends BaseViewModel{
     } catch (e) {
       throw e;
     }
+  }
+
+  Future<List<DropdownSearchModel>> getContactDistrict() async {
+    try {
+      var sesion=await SecurityViewModel().getCurrentSesion();
+      BaseListModel<DropdownSearchModel> districtes= await repo.getDistrict(sesion.token,-1);
+      return districtes.datas;
+    } catch (e) {
+      throw e;
+    }
 
   }
 
@@ -92,6 +100,8 @@ class PublicRelationViewModel extends BaseViewModel{
       throw ErrorModel(message: e.toString());
     }
   }
+
+
 
   pageReady(){
     setState(ApiStateEnum.LoadedState);

@@ -59,10 +59,8 @@ class _AddressDropdownComponentState extends State<AddressDropdownComponent> {
                 setState(() {
                 })
               }
-
             });
             widget.onChange(widget.result);
-
           },
         ),
         Visibility(

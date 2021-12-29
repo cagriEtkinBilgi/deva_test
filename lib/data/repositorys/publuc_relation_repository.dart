@@ -1,5 +1,9 @@
 import 'package:deva_test/models/base_models/base_list_model.dart';
 import 'package:deva_test/models/component_models/dropdown_search_model.dart';
+import 'package:deva_test/models/public_relation_models/contact_attacment_post_model.dart';
+import 'package:deva_test/models/public_relation_models/contact_create_result_model.dart';
+import 'package:deva_test/models/public_relation_models/contact_phone_confirme_model.dart';
+import 'package:deva_test/models/public_relation_models/new_contact_form_model.dart';
 import 'package:deva_test/models/public_relation_models/public_relation_user_check_model.dart';
 import 'package:deva_test/models/public_relation_models/public_relation_user_create_model.dart';
 import 'package:dio/dio.dart';
@@ -78,6 +82,7 @@ class PublicRelationRepository{
     }
 
   }
+
   Future<BaseListModel> getNeighborhood(String token,int id) async {
     try {
       //mahalleleri getiren api yazılacak
@@ -91,6 +96,7 @@ class PublicRelationRepository{
       throw e;
     }
   }
+
   Future<BaseListModel> getUsers(String token) async {
     try {
       BaseListModel<DropdownSearchModel> response =
@@ -102,7 +108,19 @@ class PublicRelationRepository{
     } catch (e) {
       throw e;
     }
+  }
 
+  Future<BaseListModel> getJops(String token) async {
+    try {
+      BaseListModel<DropdownSearchModel> response =
+      await BaseApi.instance.dioGet<DropdownSearchModel>(
+          "/PublicRelations/GetJob", DropdownSearchModel(),
+          token: token);
+      //print(response.datas);
+      return response;
+    } catch (e) {
+      throw e;
+    }
   }
 
   Future<BaseListModel> addPublicRelation(String token,PublicRelationUserCreateModel model) async {
@@ -114,6 +132,83 @@ class PublicRelationRepository{
           "/PublicRelations/SaveRelation", PublicRelationUserCreateModel(),
           formData,
           token: token);
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<ContactCreateResultModel> addContact(String token,NewContactFormModel model) async {
+    try {
+      //deavm edilecek!!
+      var formData=FormData.fromMap(model.toMap());
+      ContactCreateResultModel response =
+      await BaseApi.instance.dioPost<ContactCreateResultModel>(
+          "/PublicRelations/CreateVolunteer",
+          ContactCreateResultModel(),
+          formData,
+          token: token
+      );
+
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<ContactCreateResultModel> confirmeMobilePhone(String token,ContactPhoneConfirmeModel model) async {
+    try {
+      //deavm edilecek!!
+      var formData=FormData.fromMap(model.toMap());
+      ContactCreateResultModel response =
+      await BaseApi.instance.dioPost<ContactPhoneConfirmeModel>(
+          "/PublicRelations/SendSMSConfirme",
+          ContactPhoneConfirmeModel(),
+          formData,
+          token: token
+      );
+
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<BaseListModel> addImagesContact(String token,ContactAttacmentPostModel model) async {
+    try {
+      //deavm edilecek!!
+      var formData=FormData.fromMap(model.toMap());
+      if(model.Images!=null){
+        for (var file in model.Images) {
+          formData.files.addAll([
+            MapEntry("Files", await MultipartFile.fromFile(file.filePath,filename: file.name)),
+          ]);
+        }
+      }
+      BaseListModel<ContactAttacmentPostModel> response =
+      await BaseApi.instance.dioPost<ContactAttacmentPostModel>(
+          "/PublicRelations/MultiImageVolunteer", ContactAttacmentPostModel(),
+          formData,
+          token: token
+      );
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<ContactPhoneConfirmeModel> resendSmsToken(String token,ContactPhoneConfirmeModel model) async {
+    try {
+      //deavm edilecek!!
+      var formData=FormData.fromMap(model.toMap());
+      ContactPhoneConfirmeModel response =
+      await BaseApi.instance.dioPost<ContactPhoneConfirmeModel>(
+          "/PublicRelations/ReSendToken",
+          ContactPhoneConfirmeModel(),
+          formData,
+          token: token
+      );
+
       return response;
     } catch (e) {
       throw e;

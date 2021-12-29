@@ -57,6 +57,14 @@ class FormValidations{
       return"Telefon Numaranızı Başında '0' Olmadan Girin";
     }
   }
+  static identityNumberValidation(String val){
+    if(val.length!=11){
+      return"Lütfen Geçerli Kimlik Numarası Giriniz";
+    }
+    if(val[0]=="0"){
+      return"Lütfen Geçerli Kimlik Numarası Giriniz";
+    }
+  }
   static ProvincialValidation(Provincial val){
     if(val==null){
       return "Lütfen İl Seçiniz";

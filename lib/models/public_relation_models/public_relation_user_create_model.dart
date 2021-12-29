@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:deva_test/models/base_models/base_model.dart';
 import 'package:deva_test/models/component_models/dropdown_search_model.dart';
 

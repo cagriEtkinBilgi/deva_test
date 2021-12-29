@@ -9,6 +9,7 @@ import 'package:deva_test/screens/calendar_pages/calendar_main_page.dart';
 import 'package:deva_test/screens/homepages/home_page.dart';
 import 'package:deva_test/screens/notes_pages/activitie_notes_page.dart';
 import 'package:deva_test/screens/notes_pages/task_notes_page.dart';
+import 'package:deva_test/screens/public_relations/add_new_contact.dart';
 import 'package:deva_test/screens/public_relations/add_new_relation_page.dart';
 import 'package:deva_test/screens/security/login_page.dart';
 import 'package:deva_test/screens/security/profile_pages.dart';
@@ -102,7 +103,8 @@ class RouteGenerator{
           return MaterialPageRoute(builder: (_)=>CalendarMainPage());
           break;
         case '/AddNewRelation':
-          return MaterialPageRoute(builder: (_)=>AddNewRelationPage());
+          //return MaterialPageRoute(builder: (_)=>AddNewRelationPage());
+          return MaterialPageRoute(builder: (_)=>AddNewContact());
           break;
         case '/CreateActivity':
           return MaterialPageRoute(builder: (_)=>ActivityCreatePage());

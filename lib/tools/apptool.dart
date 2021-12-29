@@ -51,6 +51,19 @@ class AppTools{
     repetitionStatus.add(DropdownSearchModel(id: 8 ,value: "Geçtiğimiz 6 Ay"));
     return repetitionStatus;
   }
+
+  static List<DropdownSearchModel> getEducationState(){
+    List<DropdownSearchModel> repetitionStatus=[];
+    repetitionStatus.add(DropdownSearchModel(id: 0,value: "Lise"));
+    repetitionStatus.add(DropdownSearchModel(id: 1,value: "Ön Lisans"));
+    repetitionStatus.add(DropdownSearchModel(id: 2,value: "Lisans"));
+    repetitionStatus.add(DropdownSearchModel(id: 3,value: "Y.Lisans / MBA"));
+    repetitionStatus.add(DropdownSearchModel(id: 4,value: "Doktora"));
+    repetitionStatus.add(DropdownSearchModel(id: 5,value: "İlköğretim"));
+    repetitionStatus.add(DropdownSearchModel(id: 6,value: "Belirtilmedi"));
+    return repetitionStatus;
+  }
+
   static List<DropdownSearchModel> getGender(){
     List<DropdownSearchModel> repetitionStatus=[];
     repetitionStatus.add(DropdownSearchModel(id: 0,value: "Kadın"));
@@ -60,5 +73,5 @@ class AppTools{
     return repetitionStatus;
   }
   static String apiUri="https://www.devaportal.org";
-  //static String apiUri="https://192.168.1.25:45455";
+  //static String apiUri="https://192.168.1.25:45457";
 }
