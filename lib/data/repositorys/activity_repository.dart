@@ -282,7 +282,21 @@ class ActivityRepository {
       throw e;
     }
   }
-
+  Future<BaseListModel> createActivityPlan(String token,ActivityFormModel model) async {
+    try {
+      //deavm edilecek!!
+      var formData=FormData.fromMap(model.toMap());
+      BaseListModel<ActivityFormModel> response =
+      await BaseApi.instance.dioPost<ActivityFormModel>(
+          "/Activity/Create", ActivityFormModel(),
+          formData,
+          token: token
+      );
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
   Future<BaseListModel> createActivity(String token,ActivityFormModel model) async {
     try {
       //deavm edilecek!!

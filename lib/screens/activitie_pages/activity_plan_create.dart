@@ -1,25 +1,26 @@
 import 'package:deva_test/components/appbar_flexible_background/flexible_space_background.dart';
 import 'package:deva_test/components/build_progress_widget.dart';
-import 'package:deva_test/components/check_list_components/multiple_image_select_widget.dart';
+import 'package:deva_test/components/check_list_components/selected_list_widget.dart';
 import 'package:deva_test/components/error_widget.dart';
 import 'package:deva_test/components/message_dialog.dart';
-import 'package:deva_test/components/check_list_components/selected_list_widget.dart';
 import 'package:deva_test/data/view_models/activity_create_view_model.dart';
 import 'package:deva_test/enums/api_state.dart';
 import 'package:deva_test/models/activity_models/activity_form_model.dart';
 import 'package:deva_test/models/component_models/select_list_widget_model.dart';
 import 'package:deva_test/screens/base_class/base_view.dart';
 import 'package:flutter/material.dart';
-import 'activiti_layouts/activity_create_form_widget.dart';
 
-class ActivityCreatePage extends StatefulWidget {
-  const ActivityCreatePage({Key key}) : super(key: key);
+import 'activiti_layouts/activity_create_form_widget.dart';
+import 'activiti_layouts/activity_plan_create_widget.dart';
+
+class ActivityPlanCreate extends StatefulWidget {
+  const ActivityPlanCreate({Key key}) : super(key: key);
 
   @override
-  _ActivityCreatePageState createState() => _ActivityCreatePageState();
+  _ActivityPlanCreateState createState() => _ActivityPlanCreateState();
 }
 
-class _ActivityCreatePageState extends State<ActivityCreatePage> {
+class _ActivityPlanCreateState extends State<ActivityPlanCreate> {
   int _currentStep = 0;
   bool _canEnd=false;
   List<SelectListWidgetModel> workGroupSelectList;
@@ -27,18 +28,13 @@ class _ActivityCreatePageState extends State<ActivityCreatePage> {
   var form=ActivityFormModel();
   var _formKey= GlobalKey<FormState>();
   @override
-  void initState() {
-    form.repetitionType=0;
-    super.initState();
-  }
-  @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: Text('Faaliyet Oluştur'),
+        title: Text('Faaliyet Planla'),
         flexibleSpace: FlexibleSpaceBackground(),
       ),
-      body:  Stepper(
+      body: Stepper(
         type: StepperType.horizontal,
         currentStep: _currentStep,
         onStepTapped: (step) => tapped(step),
@@ -47,7 +43,7 @@ class _ActivityCreatePageState extends State<ActivityCreatePage> {
         controlsBuilder: (BuildContext context,{void Function() onStepCancel, void Function() onStepContinue}){
           return buildControls(onStepContinue, onStepCancel,context);
         },
-        steps: <Step>[
+        steps: [
           Step(
             title:(_currentStep == 0)? Text('Çalışma Grubu'):Text('...'),
             content:BaseView<ActivityCreateViewModel>(
@@ -116,7 +112,7 @@ class _ActivityCreatePageState extends State<ActivityCreatePage> {
           ),
           Step(
             title: (_currentStep == 2)? Text('Durum Bilgileri'):Text('..'),
-            content: ActivityCreateFormWidget(
+            content: ActivityPlanCreateWidget(
               form: form,
               activityForm: _formKey,
             ),
@@ -125,20 +121,7 @@ class _ActivityCreatePageState extends State<ActivityCreatePage> {
             StepState.complete : StepState.disabled,
           ),
           Step(
-            title: (_currentStep == 3)? Text('Fotograf'):Text('..'),
-            content:MultipleImageSelectWidget(
-              images: form.images??[],
-              onChange: (val){
-                form.images=val;
-                print(form.images);
-              },
-            ),
-            isActive:_currentStep >= 0,
-            state: _currentStep >= 3 ?
-            StepState.complete : StepState.disabled,
-          ),
-          Step(
-            title: (_currentStep == 4)? Text('Katılımcılar'):Text('..'),
+            title: (_currentStep == 3)? Text('Katılımcılar'):Text('..'),
             content:BaseView<ActivityCreateViewModel>(
               onModelReady: (model){
                 model.getActivityActivityParticipant(form.workGroupID);
@@ -159,14 +142,14 @@ class _ActivityCreatePageState extends State<ActivityCreatePage> {
                         idList.add(item.id);
                       }
                       form.participants=idList;
-                      //print(form.activityParticipant);//değerler alındı obje oladarlast
+                      //print(form.activityParticipant);//değerler alındı obje oladar
                     },
                   );
                 }
               },
             ),
             isActive:_currentStep >= 0,
-            state: _currentStep >= 4 ?
+            state: _currentStep >= 3 ?
             StepState.complete : StepState.disabled,
           ),
         ],
@@ -196,20 +179,9 @@ class _ActivityCreatePageState extends State<ActivityCreatePage> {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Lütfen Kategori Seçin")));
                 return;
               }else if(_currentStep==2){
-                if(_formKey.currentState.validate())
+                if(_formKey.currentState.validate()){
                   onStepContinue();
-                else
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Lütfen Formu Kotrol Ediniz")));
-                return;
-              }else if(_currentStep==3){
-                onStepContinue();
-              }
-              else if(_currentStep==4){
-                if(form.participants.length!=0)
-                  onStepContinue();
-                else
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("En Az Bir Katılımcı Seçniz")));
-                return;
+                }
               }
             },
             child: Text("Devam"),
@@ -228,20 +200,22 @@ class _ActivityCreatePageState extends State<ActivityCreatePage> {
                 return CustomErrorWidget(model.onError);
               } else {
                 return TextButton(
-                  onPressed:()async{
-                    try{
-                      var result = await model.createActivity(form).then((value){
-                        if(value){
-                          Navigator.of(context).pop(true);
-                        }else{
-                          CustomDialog.instance.exceptionMessage(context);
-                        }
-                      });
-                    }catch(e){
-                      CustomDialog.instance.exceptionMessage(context,model: e);
-                    }
-                  },
-                  child: Text("Kaydet")
+                    onPressed:()async{
+                      try{
+
+                          var result = await model.createActivityPlan(form).then((value){
+                            if(value){
+                              Navigator.of(context).pop(true);
+                            }else{
+                              CustomDialog.instance.exceptionMessage(context);
+                            }
+                          });
+
+                      }catch(e){
+                        CustomDialog.instance.exceptionMessage(context,model: e);
+                      }
+                    },
+                    child: Text("Kaydet")
                 );
               }
             },
@@ -249,9 +223,8 @@ class _ActivityCreatePageState extends State<ActivityCreatePage> {
           visible: _canEnd,
         ),
       ],
-      );
-    }
-
+    );
+  }
 
   tapped(int step){
     setState(() => _currentStep = step);
@@ -260,11 +233,11 @@ class _ActivityCreatePageState extends State<ActivityCreatePage> {
   continued(){
     _currentStep < 4 ?
     setState(() => _currentStep += 1): null;
-    _canEnd=_currentStep==4;
+    _canEnd=_currentStep==3;
   }
   cancel(){
     _currentStep > 0 ?
     setState(() => _currentStep -= 1) : null;
-    _canEnd=_currentStep==4;
+    _canEnd=_currentStep==3;
   }
 }

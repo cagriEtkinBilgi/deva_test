@@ -10,9 +10,7 @@ import 'package:deva_test/models/component_models/check_list_model.dart';
 import 'package:deva_test/models/component_models/select_list_widget_model.dart';
 import 'package:deva_test/screens/base_class/base_view.dart';
 import 'package:deva_test/tools/validations.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'activiti_layouts/activity_complate_participants_widget.dart';
 
 class ActivityCompleteForm extends StatelessWidget {

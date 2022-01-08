@@ -1,6 +1,7 @@
 import 'package:deva_test/components/address_components/adress_district_dropdown_component.dart';
 import 'package:deva_test/components/date_components/text_field_date_picker_widget.dart';
 import 'package:deva_test/components/dropdown_serach_widget.dart';
+import 'package:deva_test/components/radiobutons/gender_radio_button.dart';
 import 'package:deva_test/components/radiobutons/member_radio_buttons.dart';
 import 'package:deva_test/models/component_models/dropdown_search_model.dart';
 import 'package:deva_test/models/public_relation_models/new_contact_form_model.dart';
@@ -124,14 +125,19 @@ class NewContactForm extends StatelessWidget {
                       form.birthDate=val;
                     },
                   ),
-                  SizedBox(height: 5,),
-                  DropdownSerachWidget(
+                  SizedBox(height: 15,),
+                  /*DropdownSerachWidget(
                     items: AppTools.getGender(),
                     dropdownLabel: "Cinsiyet",
                     onChange: (val){
                       print(val.id);
                       form.gender=val.id;
                     },
+                  ),*/
+                  GenderRadioButton(
+                    onClick: (val){
+                      form.gender=val;
+                    }
                   ),
 
                   SizedBox(height: 5,),

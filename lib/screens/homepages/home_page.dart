@@ -176,12 +176,27 @@ class HomePage extends StatelessWidget {
             decorationColor: Theme.of(context).primaryColor,
             textColor: Colors.white,
             icon: Icons.add,
-            subTitle: "Yeni Faaliyet OLuştur",
+            subTitle: "Yeni Faaliyet Oluştur",
             count: 0,
             onClick: () {
               Navigator.pushNamed<dynamic>(context,'/CreateActivity');
             },
           ),
+          SizedBox(
+            height: 10,
+          ),
+          SimpleCardWidget(
+            title: "Şampiyonlar Ligi",
+            decorationColor: Theme.of(context).primaryColor,
+            textColor: Colors.white,
+            icon: Icons.emoji_events_outlined,
+            subTitle: "Gönüllü/Üye Ekleme skorları",
+            count: 0,
+            onClick: () {
+              Navigator.pushNamed<dynamic>(context,'/PublicRelationScorbord');
+            },
+          )
+
           /*Row(
             children: [
               Expanded(

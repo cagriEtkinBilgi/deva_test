@@ -20,6 +20,7 @@ class ActivityFormModel extends BaseModel{
   int activityStatus;
   int locationID;
   String locationName;
+  String locationURL;
   String dueDateStr;
   String plannedStartDateStr;
   String plannedStartTime;
@@ -55,6 +56,7 @@ class ActivityFormModel extends BaseModel{
     this.activityStatus,
     this.locationID,
     this.locationName,
+    this.locationURL,
     this.dueDateStr,
     this.plannedStartDateStr,
     this.plannedStartTime,
@@ -104,6 +106,7 @@ class ActivityFormModel extends BaseModel{
       plannedEndTime:map["plannedEndTime"],
       locationID: map["locationID"],
       locationName: map["locationName"],
+      locationURL: map["LocationURL"],
       dueDateStr: map["dueDateStr"],
       endDate:map["endDate"],
       activityStatusStr:map["activityStatusStr"],
@@ -151,6 +154,7 @@ class ActivityFormModel extends BaseModel{
     "plannedEndTime":plannedEndTime,
     "locationID":locationID,
     "locationName":locationName,
+    "locationURL":locationURL,
     "dueDateStr":dueDateStr,
     "endDate":endDate,
     "activityStatusStr":activityStatusStr,

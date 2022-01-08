@@ -82,6 +82,20 @@ class ActivityCreateViewModel extends BaseViewModel{
     }
 
   }
+  Future<bool> createActivityPlan(ActivityFormModel model)async{
+    try{
+      setState(ApiStateEnum.LodingState);
+      var sesion=await SecurityViewModel().getCurrentSesion();
+      BaseListModel<ActivityFormModel> retVal;
+      retVal= await repo.createActivityPlan(sesion.token,model);
+      setState(ApiStateEnum.LoadedState);
+      return true;
+    }catch(e){
+      setState(ApiStateEnum.LoadedState);
+      throw ErrorModel(message: e.toString());
+    }
+  }
+
   Future<bool> createActivity(ActivityFormModel model) async {
     try{
       setState(ApiStateEnum.LodingState);

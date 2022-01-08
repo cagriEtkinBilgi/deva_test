@@ -4,6 +4,7 @@ import 'package:deva_test/data/view_models/security_view_model.dart';
 import 'package:deva_test/enums/api_state.dart';
 import 'package:deva_test/models/base_models/base_list_model.dart';
 import 'package:deva_test/models/component_models/dropdown_search_model.dart';
+import 'package:deva_test/models/public_relation_models/public_relation_score_bord.dart';
 import 'package:deva_test/models/public_relation_models/public_relation_user_check_model.dart';
 import 'package:deva_test/models/public_relation_models/public_relation_user_create_model.dart';
 import 'package:deva_test/tools/locator.dart';
@@ -16,6 +17,7 @@ class PublicRelationViewModel extends BaseViewModel{
   String phoneNumber="";
   bool showUserCard=false;
   bool showResult=false;
+  PublicRelationScoreBord scoreBord;
 
   var repo=locator<PublicRelationRepository>();
 
@@ -96,6 +98,19 @@ class PublicRelationViewModel extends BaseViewModel{
       setState(ApiStateEnum.LoadedState);
       return true;
     } catch (e) {
+      setState(ApiStateEnum.LoadedState);
+      throw ErrorModel(message: e.toString());
+    }
+  }
+  Future<bool>getScoreBord() async{
+    try{
+      setState(ApiStateEnum.LodingState);
+      var sesion=await SecurityViewModel().getCurrentSesion();
+      scoreBord=await repo.getScoreBord(sesion.token);
+      setState(ApiStateEnum.LoadedState);
+      return true;
+
+    }catch(e){
       setState(ApiStateEnum.LoadedState);
       throw ErrorModel(message: e.toString());
     }

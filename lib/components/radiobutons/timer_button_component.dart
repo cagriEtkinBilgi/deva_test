@@ -9,8 +9,8 @@ class TimerButtonComponent extends StatefulWidget {
   Function onPressed;
   TimerButtonComponent({
     Key key,
-    this.start=120,
-    this.buttonTitle="Yeniden Gönder",
+    this.start=0,
+    this.buttonTitle="SMS Gönder",
     this.onPressed,
   }) : super(key: key);
 
@@ -25,8 +25,7 @@ class _TimerButtonComponentState extends State<TimerButtonComponent> {
 
   @override
   void initState() {
-    startTimer();
-    _percent=widget.start;
+    _percent=120;
     super.initState();
   }
 
@@ -52,7 +51,7 @@ class _TimerButtonComponentState extends State<TimerButtonComponent> {
     }else{
       return Container(
         child: ElevatedButton(
-          child: Text("Tekrar Gönder"),
+          child: Text(widget.buttonTitle),
           onPressed: (){
             startTimer();
             widget.onPressed();
@@ -86,7 +85,8 @@ class _TimerButtonComponentState extends State<TimerButtonComponent> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    if(_timer!=null)
+      _timer.cancel();
     super.dispose();
   }
 }

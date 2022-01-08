@@ -1,16 +1,17 @@
-
 import 'package:deva_test/screens/activitie_pages/activiti_layouts/activity_filter_page.dart';
 import 'package:deva_test/screens/activitie_pages/activiti_page.dart';
 import 'package:deva_test/screens/activitie_pages/activity_complete_form.dart';
 import 'package:deva_test/screens/activitie_pages/activity_cretae_page.dart';
 import 'package:deva_test/screens/activitie_pages/activity_detail_page.dart';
 import 'package:deva_test/screens/activitie_pages/activity_form_page.dart';
+import 'package:deva_test/screens/activitie_pages/activity_plan_create.dart';
 import 'package:deva_test/screens/calendar_pages/calendar_main_page.dart';
 import 'package:deva_test/screens/homepages/home_page.dart';
 import 'package:deva_test/screens/notes_pages/activitie_notes_page.dart';
 import 'package:deva_test/screens/notes_pages/task_notes_page.dart';
 import 'package:deva_test/screens/public_relations/add_new_contact.dart';
 import 'package:deva_test/screens/public_relations/add_new_relation_page.dart';
+import 'package:deva_test/screens/public_relations/public_relation_scorbord_page.dart';
 import 'package:deva_test/screens/security/login_page.dart';
 import 'package:deva_test/screens/security/profile_pages.dart';
 import 'package:deva_test/screens/security/splash_screen.dart';
@@ -62,6 +63,10 @@ class RouteGenerator{
           final args=settings.arguments;//Parametre Model
           return MaterialPageRoute(builder: (_)=>ActivityFormPage(args: args,));
           break;
+        case '/ActivityPlanCreate':
+          final args=settings.arguments;//Parametre Model
+          return MaterialPageRoute(builder: (_)=>ActivityPlanCreate());
+          break;
         case '/ActivitiesCompleteForm':
           final args=settings.arguments;//Parametre Model
           return MaterialPageRoute(builder: (_)=>ActivityCompleteForm(args: args,));
@@ -108,6 +113,9 @@ class RouteGenerator{
           break;
         case '/CreateActivity':
           return MaterialPageRoute(builder: (_)=>ActivityCreatePage());
+          break;
+        case '/PublicRelationScorbord':
+          return MaterialPageRoute(builder: (_)=>PublicRelationScorbordPage());
           break;
         default:
           return _errorRoute();

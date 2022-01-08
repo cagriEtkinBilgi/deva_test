@@ -75,7 +75,7 @@ class ActivitiePage extends StatelessWidget {
             ),
             onPressed: (){
               //CreateActivity
-              Navigator.pushNamed<dynamic>(context,'/CreateActivity');
+              Navigator.pushNamed<dynamic>(context,'/ActivityPlanCreate');
             },
           ),
           body: buildScreen(context,model),

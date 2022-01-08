@@ -26,7 +26,9 @@ class _TextFieldDatePickerWidgetState extends State<TextFieldDatePickerWidget> {
 
   @override
   void initState() {
-    textControllerDate.text =formatDate(widget.initDateTime, [dd, '.', mm, '.', yyyy]);
+    selectedDate=formatDate(widget.initDateTime, [dd, '.', mm, '.', yyyy]);
+    textControllerDate.text =selectedDate;
+    widget.onChangedDate(selectedDate);
     super.initState();
   }
 

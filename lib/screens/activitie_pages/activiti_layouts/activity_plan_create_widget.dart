@@ -1,16 +1,21 @@
 import 'package:deva_test/components/custom_link_field_widget.dart';
+import 'package:deva_test/components/date_components/text_field_date_time_picker_widget.dart';
 import 'package:deva_test/components/form_checkbox_list_tile_Widget.dart';
 import 'package:deva_test/components/location_components/location_text_widget.dart';
-import 'package:deva_test/components/date_components/text_field_date_time_picker_widget.dart';
 import 'package:deva_test/models/activity_models/activity_form_model.dart';
 import 'package:deva_test/tools/validations.dart';
 import 'package:flutter/material.dart';
 
-class ActivityCreateFormWidget extends StatelessWidget {
+class ActivityPlanCreateWidget extends StatelessWidget {
   GlobalKey<FormState> activityForm;
   ActivityFormModel form;
+  ActivityPlanCreateWidget(
+      {
+        Key key,
+        this.form,
+        this.activityForm
+      }) : super(key: key);
 
-  ActivityCreateFormWidget({this.form,this.activityForm});
   @override
   Widget build(BuildContext context){
     return Card(
@@ -39,10 +44,8 @@ class ActivityCreateFormWidget extends StatelessWidget {
                         height: 5,
                       ),
                       TextFormField(
-                        validator: (val)=>FormValidations.NonEmty(val),
                         onChanged: (val){
                           form.desc=val;
-                          form.returns=val;
                         },
                         initialValue: form.desc,
                         decoration: InputDecoration(
@@ -54,14 +57,13 @@ class ActivityCreateFormWidget extends StatelessWidget {
                         height: 5,
                       ),
                       TextFormField(
-                        validator: (val)=>FormValidations.NonEmty(val),
                         onChanged: (val){
-                          form.summary=val;
+                          form.locationName=val;
                         },
-                        initialValue:form.summary,
+                        initialValue: form.locationName,
                         decoration: InputDecoration(
-                          labelText: "Özet",
-                          hintText: "Özet",
+                          labelText: "Konum Adı",
+                          hintText: "Konum Adı",
                         ),
                       ),
                       SizedBox(
@@ -69,6 +71,7 @@ class ActivityCreateFormWidget extends StatelessWidget {
                       ),
                       //Bu Alan Kalkacak Ve Telefon Konumu Alınacak
                       LocationTextWidget(
+                        label: "Konum Bağlantısı",
                         initVal: form.locationURL,
                         onChange: (val){
                           form.locationURL=val;
@@ -90,19 +93,7 @@ class ActivityCreateFormWidget extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      TextFieldDateTimePickerWidget(
-                        initDate: form.plannedEndDateStr,
-                        initTimeStr: form.plannedEndTime,
-                        dateLabel: "Bitiş Tarihi",
-                        timeLabel: "Saat",
-                        onChangedDate: (date,time){
-                          form.plannedEndDateStr=date;
-                          form.plannedEndTime=time;
-                        },
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
+
                       FormCheckboxListTile(
                         title: "Herkese Açık",
                         initVal: form.isPublic,

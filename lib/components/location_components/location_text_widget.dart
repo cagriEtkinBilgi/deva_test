@@ -8,7 +8,7 @@ class LocationTextWidget extends StatefulWidget {
   String initVal;
   String label;
 
-  LocationTextWidget({this.initVal,this.onChange});
+  LocationTextWidget({this.initVal,this.onChange,this.label});
 
   @override
   _LocationTextWidgetState createState() => _LocationTextWidgetState();

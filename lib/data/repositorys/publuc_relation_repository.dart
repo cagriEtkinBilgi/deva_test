@@ -4,6 +4,7 @@ import 'package:deva_test/models/public_relation_models/contact_attacment_post_m
 import 'package:deva_test/models/public_relation_models/contact_create_result_model.dart';
 import 'package:deva_test/models/public_relation_models/contact_phone_confirme_model.dart';
 import 'package:deva_test/models/public_relation_models/new_contact_form_model.dart';
+import 'package:deva_test/models/public_relation_models/public_relation_score_bord.dart';
 import 'package:deva_test/models/public_relation_models/public_relation_user_check_model.dart';
 import 'package:deva_test/models/public_relation_models/public_relation_user_create_model.dart';
 import 'package:dio/dio.dart';
@@ -209,6 +210,21 @@ class PublicRelationRepository{
           token: token
       );
 
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<PublicRelationScoreBord> getScoreBord(String token) async {
+    try {
+      //mahalleleri getiren api yazılacak
+      PublicRelationScoreBord response =
+      await BaseApi.instance.dioGet<PublicRelationScoreBord>(
+          "/PublicRelations/GetScorebord", PublicRelationScoreBord(),
+          token: token);
+      //print(response.datas);
+      print(response);
       return response;
     } catch (e) {
       throw e;

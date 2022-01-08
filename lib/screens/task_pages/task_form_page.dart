@@ -81,19 +81,10 @@ class TaskFormPage extends StatelessWidget {
                   SizedBox(
                     height: 5,
                   ),
-                  TextFieldDatePickerWidget(
-                    initDate: formModel.plannedStartDate,
-                    dateLabel: "Planlanan Başlangıç",
-                    onChangedDate: (date){
-                      formModel.plannedStartDate=date;
-                    },
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
+
                   TextFieldDatePickerWidget(
                     initDate: formModel.plannedEndDate,
-                    dateLabel: "Planlanan Bitiş",
+                    dateLabel: "Hedef Tarih",
                     onChangedDate: (date){
                       formModel.plannedEndDate=date;
                     },
@@ -114,7 +105,7 @@ class TaskFormPage extends StatelessWidget {
                     height: 5,
                   ),
                   DropdownSerachWidget(
-                    selectedId: formModel.taskPriority,
+                    selectedId: 2,
                     items: formModel.priority,
                     dropdownLabel: "Öncelik",
                     onChange: (val){
@@ -124,7 +115,7 @@ class TaskFormPage extends StatelessWidget {
                   Divider(color: Colors.black,),
                   Container(
                     width: double.infinity,
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       onPressed: () async {
                         //Activitiden Model Alınacak
                         try{
@@ -139,7 +130,6 @@ class TaskFormPage extends StatelessWidget {
                           CustomDialog.instance.exceptionMessage(context,model: e);
                         }
                       },
-                      color: Colors.blue,
                       child: Text("Kaydet"),
                     ),
                   )

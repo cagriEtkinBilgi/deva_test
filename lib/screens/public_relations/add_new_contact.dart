@@ -85,20 +85,9 @@ class _AddNewContactState extends State<AddNewContact> {
           state: _currentStep >= 2 ?
           StepState.complete : StepState.disabled,
         ),
+
         Step(
-          title: (_currentStep == 1)? Text('Resim Ekle'):Text('..'),
-          content: MultipleImageSelectWidget(
-            images: [],
-            onChange: (val){
-              images=val;
-            },
-          ),
-          isActive:_currentStep >= 0,
-          state: _currentStep >= 2 ?
-          StepState.complete : StepState.disabled,
-        ),
-        Step(
-          title: (_currentStep == 2)? Text('Doğrulama'):Text('..'),
+          title: (_currentStep == 1)? Text('Doğrulama'):Text('..'),
           content: PhoneConfirmeLayout(
             onChangeText:(String val){
               if(val!="")
@@ -114,6 +103,18 @@ class _AddNewContactState extends State<AddNewContact> {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Bir Hata Oluştu Lütfen Tekrar Deneyin")));
                 }
               });
+            },
+          ),
+          isActive:_currentStep >= 0,
+          state: _currentStep >= 2 ?
+          StepState.complete : StepState.disabled,
+        ),
+        Step(
+          title: (_currentStep == 2)? Text('Resim Ekle'):Text('..'),
+          content: MultipleImageSelectWidget(
+            images: [],
+            onChange: (val){
+              images=val;
             },
           ),
           isActive:_currentStep >= 0,
@@ -138,8 +139,19 @@ class _AddNewContactState extends State<AddNewContact> {
               TextButton(onPressed:() {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("İşlem İptal Edildi! Sonra Devam Edebilirsini!")));
                 Navigator.pop(context);
-              } , child: Text("İptal")),
+                } , child: Text("İptal")
+              ),
               Spacer(),
+              Visibility(
+                visible: (_currentStep==1),
+                child: TextButton(onPressed:() {
+                  //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("İşlem İptal Edildi! Sonra Devam Edebilirsini!")));
+
+                  onStepContinue();
+                } , child: Text("Atla")
+                ),
+              ),
+              SizedBox(width: 5,),
               TextButton(
                 onPressed:() async {
                   try{
@@ -159,6 +171,17 @@ class _AddNewContactState extends State<AddNewContact> {
                     }
                     else if(_currentStep==1){
 
+                      if(_textToken==_smsToken){
+                        var smsModel= ContactPhoneConfirmeModel(id:_recortID,smsToken: _smsToken );
+                        var value= await model.confirmeMobilePhone(smsModel);
+                        if(value){
+                          onStepContinue();
+                        }
+                      }else{
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Doğrulama Kodu Hatası")));
+                      }
+
+                    }else{
 
                       var imageModels=ContactAttacmentPostModel(
                         Images: images,
@@ -166,23 +189,14 @@ class _AddNewContactState extends State<AddNewContact> {
                       );
                       await model.addImagesContact(imageModels).then((value){
                         if(value){
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Kayıt İşlemi Başarılı")));
+                          Navigator.pop(context);
 
-                          onStepContinue();
+
                         }else{
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Kayıt Sırasında Bir Hata Oldu")));
                         }
                       });
-                    }else{
-                      if(_textToken==_smsToken){
-                        var smsModel= ContactPhoneConfirmeModel(id:_recortID,smsToken: _smsToken );
-                        var value= await model.confirmeMobilePhone(smsModel);
-                        if(value){
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Kayıt İşlemi Başarılı")));
-                          Navigator.pop(context);
-                        }
-                      }else{
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Doğrulama Kodu Hatası")));
-                      }
 
                     }
                   }catch(e){
